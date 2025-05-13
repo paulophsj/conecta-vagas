@@ -13,7 +13,7 @@ export default function Header() {
     }, [openModal])
 
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="bg-white sticky top-0 border-gray-200 dark:bg-gray-900 shadow-2xl">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <svg className="shrink-0 w-10 h-10 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="oklch(70.7% 0.165 254.624)" viewBox="0 0 18 20">
