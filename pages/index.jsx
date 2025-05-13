@@ -27,11 +27,11 @@ export default function index() {
                     </button>
                 </form>
             </section>
-            <section className="container mb-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="container mb-10 mx-auto sm:px-6 lg:px-6">
                 <h2 className="text-blue-900 text-2xl mb-10 font-bold text-center sm:text-left sm:text-3xl">Vagas em destaque</h2>
                 <ListCard quantidade={4} />
             </section>
-            <section className="container mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+            <section className="container mx-auto sm:px-6 lg:px-8 mb-10">
                 <h2 className="text-blue-900 text-2xl mb-10 font-bold text-center sm:text-left sm:text-3xl">Como funciona?</h2>
                 <ul className="flex justify-center flex-wrap items-center gap-10 sm:justify-around">
                     <li className="w-40 h-40 flex flex-col items-center justify-center gap-2">
@@ -56,7 +56,7 @@ export default function index() {
                     </li>
                 </ul>
             </section>
-            <section className="container mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+            <section className="container mb-10 mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-blue-900 text-2xl mb-10 font-bold text-center sm:text-left sm:text-3xl">Comentários</h2>
                 <CommentsList quantidade={4}/>
             </section>

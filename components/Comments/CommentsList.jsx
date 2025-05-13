@@ -28,7 +28,7 @@ export default function CommentsList({ quantidade }) {
     }, [slides.length]);
 
     return (
-        <div className="relative w-full max-w-3xl mx-auto overflow-hidden rounded-2xl">
+        <div className="relative w-full max-w-3xl mx-auto overflow-hidden rounded-2xl -z-10">
             <div className="flex transition-transform duration-700" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
                 {slides.length === 0 ? (
                     <p className="text-center text-gray-500 w-full">Carregando comentários...</p>
