@@ -2,7 +2,7 @@ export default function CommentsCard({ comments }) {
     const { id, nome, data, comentario } = comments;
 
     return (
-        <div className="max-w-lg mx-auto shadow-2xl shadow-blue-600 px-6 py-4 rounded-lg w-full flex-shrink-0 h-full max-lg:shadow-none" key={id}>
+        <div className="max-w-lg mx-auto shadow-lg shadow-blue-400 px-6 py-4 rounded-lg w-full flex-shrink-0 max-lg:shadow-none" key={id}>
             <div className="flex items-center mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#1c398e" className="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
