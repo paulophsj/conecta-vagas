@@ -17,7 +17,7 @@ export default function Card({ vagaEmprego }) {
                         pathname: "/vaga/[id]",
                         query: { id: id }
                     }}
-                    className="bg-orange-500 p-2 text-white text-center rounded-sm w-full block"
+                    className="bg-orange-400 hover:bg-orange-500 p-2 text-white text-center rounded-sm w-full block"
                 >
                     Ver mais
                 </Link>
