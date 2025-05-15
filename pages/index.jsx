@@ -1,6 +1,6 @@
 import Card from "@/components/Cards/Card";
 import ListCard from "@/components/Cards/ListCard";
-import CommentsList from "@/components/Comments/CommentsList";
+import ListComments from "@/components/Comments/ListComments";
 
 export default function index() {
     return (
@@ -65,7 +65,7 @@ export default function index() {
             </section>
             <section className="container mb-10 mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-blue-900 text-2xl mb-10 font-bold text-center sm:text-left sm:text-3xl">Comentários</h2>
-                <CommentsList quantidade={4} />
+                <ListComments quantidade={4} />
             </section>
         </>
     )

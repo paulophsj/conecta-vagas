@@ -14,7 +14,7 @@ export default function Card({ vagaEmprego }) {
             <footer className="mt-4">
                 <Link
                     href={{
-                        pathname: "/vaga/[id]",
+                        pathname: "/vagas/[id]",
                         query: { id: id }
                     }}
                     className="bg-orange-400 hover:bg-orange-500 p-2 text-white text-center rounded-sm w-full block"

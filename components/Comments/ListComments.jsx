@@ -2,7 +2,7 @@ import { FindAllComments } from '@/services/FindAllComments';
 import { useEffect, useState } from 'react';
 import CommentsCard from './CommentsCard';
 
-export default function CommentsList({ quantidade }) {
+export default function ListComments({ quantidade }) {
     const [slides, setSlides] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
