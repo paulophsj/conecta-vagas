@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer(){
     return (
         <footer className="w-full bg-blue-900">
@@ -14,16 +16,16 @@ export default function Footer(){
 
                     {/* Ajuste para centralizar e alinhar os itens */}
                     <div className="flex flex-col items-center justify-center">
-                        <h4 className="text-sm text-white">Sobre</h4>
+                        <Link href={{pathname: "/"}} className="text-sm text-white">Sobre</Link>
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                        <h4 className="text-sm text-white">Contato</h4>
+                        <Link href={{pathname: "/"}} className="text-sm text-white">Contato</Link>
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                        <h4 className="text-sm text-white">Termos de uso</h4>
+                        <Link href={{pathname: "/"}} className="text-sm text-white">Termos de uso</Link>
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                        <h4 className="text-sm text-white">Política de privacidade</h4>
+                        <Link href={{pathname: "/"}} className="text-sm text-white">Política de privacidade</Link>
                     </div>
                 </div>
             </div>
