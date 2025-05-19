@@ -1,29 +1,12 @@
-import Card from "@/components/Cards/Card";
-import { FindAllCards } from "@/services/FindAllCards";
-import { useEffect, useState } from "react";
+import ListCard from "@/components/Cards/ListCard";
 
 export default function vaga_index() {
-    const [vaga, setVaga] = useState([{}])
-
-    useEffect(() => {
-        const fetchVaga = async () => {
-            const response = await FindAllCards()
-            setVaga(response)
-        }
-        fetchVaga()
-    }, [])
-
     return (
         <>
-        {
-            vaga ? (
-                vaga.map((vaga) => (
-                    <Card key={vaga.id} vagaEmprego={vaga} />
-                ))
-            ) : (
-                <p>Loading...</p>
-            )
-        }
+
+            <section className="container mx-auto p-10 flex flex-col items-center gap-10">
+                <ListCard />
+            </section>
         </>
     )
 }
