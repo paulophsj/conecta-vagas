@@ -21,7 +21,7 @@ export default function Card({ vagaEmprego }) {
                             <p>
                                 {descricao}
                             </p>
-                            <Link href={{pathname: "/vagas/[id]", query: {id: id}}} className="bg-orange-400 text-white p-1 rounded text-sm">
+                            <Link href={{pathname: "/vagas/[id]", query: {id: id}}} className="bg-orange-400 text-white p-2 font-bold self-end hover:bg-orange-500 rounded text-sm">
                                 VER MAIS
                             </Link>
                         </section>
