@@ -15,7 +15,7 @@ export default function ListCard({quantidade}){
 
     return (
         <>
-            <ul className={`m-0 p-0 w-full flex justify-center gap-10 flex-wrap items-center min-lg:justify-between`}>
+            <ul className={`m-0 p-0 w-full flex justify-center gap-3 md:gap-10 flex-wrap items-center min-lg:justify-between`}>
                 {
                     cards.map((vagaEmprego) => 
                         <Card key={vagaEmprego.id} vagaEmprego={vagaEmprego} />
