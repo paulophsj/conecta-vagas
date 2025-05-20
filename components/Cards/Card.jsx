@@ -11,7 +11,7 @@ export default function Card({ vagaEmprego }) {
                     <article className="border w-full">
                         <header className="bg-blue-900 flex p-4 items-center gap-5">
                             <span className="border border-white w-10 h-10 rounded-full"></span>
-                            <h2 className="text-white font-bold">{titulo}</h2>
+                            <h2 className="text-white font-bold dark:text-white">{titulo}</h2>
                         </header>
                         <section className="p-4 flex flex-col items-start gap-5">
                             <aside className="flex gap-5">
@@ -29,7 +29,7 @@ export default function Card({ vagaEmprego }) {
                 ) : (
                     <article className="w-44 h-40 flex flex-col justify-between">
                         <header className="h-full flex flex-col justify-between">
-                            <h2 className="text-blue-900 font-bold text-lg">{titulo}</h2>
+                            <h2 className="text-blue-900 dark:text-white font-bold text-lg">{titulo}</h2>
                             <p className="font-semibold">{empresa}</p>
                         </header>
                         <section>
