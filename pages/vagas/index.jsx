@@ -27,7 +27,7 @@ export default function vaga_index() {
                     </button>
                 </div>
                 <ListCard />
-                <div className={`bg-white fixed w-screen h-screen z-50 p-4 left-0 top-0 md:h-fit md:sticky justify-self-start md:z-40 grow md:top-23 shadow-md rounded-sm md:translate-y-0 flex flex-col justify-between ${openModal ? "translate-y-0" : "translate-y-full"} transition-transform duration-500 ease-in-out`}>
+                <div className={`bg-white fixed w-screen h-screen z-50 p-4 left-0 top-0 md:h-fit md:sticky md:max-h-screen justify-self-start md:z-40 grow md:top-23 shadow-md rounded-sm md:translate-y-0 flex flex-col justify-between ${openModal ? "translate-y-0" : "translate-y-full"} transition-transform duration-500 ease-in-out`}>
                     <div className="mb-2">
                         <header className="mb-2">
                             <p className="font-bold text-lg">FILTROS</p>
