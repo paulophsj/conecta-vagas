@@ -103,7 +103,7 @@ export default function vaga_index() {
                             </ul>
                         </section>
                     </div>
-                    <footer className="flex gap-3">
+                    <footer className="flex gap-3 mb-5">
                         <button onClick={() => setOpenModal(false)} className="max-sm:text-xs md:hidden w-full justify-center cursor-pointer p-2 items-center rounded-sm text-white flex gap-3 bg-red-500 hover:bg-red-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="white" className="w-5 h-5 max-sm:w-3 max-sm:h-3 bi bi-x-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
