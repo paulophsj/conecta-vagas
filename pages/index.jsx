@@ -4,10 +4,9 @@ import { useSideBar } from "@/components/Static/SideBarProvider";
 import Link from "next/link";
 
 export default function index() {
-    const { setIsOpen } = useSideBar();
     return (
         <>
-            <section className="container mx-auto p-5 max-sm:p-10 flex flex-col items-center gap-10">
+            <section className="container mx-auto p-15 max-sm:p-10 flex flex-col items-center gap-10">
                 <h1 className="text-center text-5xl max-lg:text-4xl text-blue-900 dark:text-white font-bold">
                     Encontre a vaga ideal <br /> para você
                 </h1>
@@ -27,7 +26,7 @@ export default function index() {
                         </svg>
                         <p className="text-white m-0 hidden max-sm:block">Buscar vagas</p>
                     </button>
-                    <Link href={{ pathname: "/vagas" }} onClick={() => setIsOpen(false)} className="bg-blue-400 text-white rounded-sm h-10 sm:hidden hover:bg-blue-500 cursor-pointer flex justify-center items-center gap-4">
+                    <Link href={{ pathname: "/vagas" }} className="bg-blue-400 text-white rounded-sm h-10 sm:hidden hover:bg-blue-500 cursor-pointer flex justify-center items-center gap-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-card-checklist" viewBox="0 0 16 16">
                             <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
                             <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />

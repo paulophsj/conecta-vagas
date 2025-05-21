@@ -1,41 +1,25 @@
 import ListCard from "@/components/Cards/ListCard";
-import Link from "next/link";
+import { useState } from "react";
 
 export default function vaga_index() {
+    const [openModal, setOpenModal] = useState(false);
     return (
         <>
-
-            <section className="container p-5 mx-auto flex flex-col items-center gap-10">
+            <section className="container p-5 mx-auto flex flex-col items-center gap-5">
                 <div className="w-full">
-                    <ul className="flex justify-between gap-1">
-                        <li className="border-gray-600 text-center border-2 w-full flex items-center justify-between p-1 hover:border-blue-600">
-                            <p>Opção</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            </svg>
-                        </li>
-                        <li className="border-gray-600 text-center border-2 w-full flex items-center justify-between p-1 hover:border-blue-600">
-                            <p>Opção</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            </svg>
-                        </li>
-                        <li className="border-gray-600 text-center border-2 w-full flex items-center justify-between p-1 hover:border-blue-600">
-                            <p>Opção</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            </svg>
-                        </li>
-                        <li className="border-gray-600 text-center border-2 w-full flex items-center justify-between p-1 hover:border-blue-600">
-                            <p>Opção</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            </svg>
-                        </li>
-                    </ul>
+                    <button type="button" onClick={() => setOpenModal(true)} className="flex items-center gap-2 bg-orange-400 hover:bg-orange-500 cursor-pointer p-2 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-sliders2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                        </svg>
+                        <p className="text-white font-bold">Filtros</p>
+                    </button>
                 </div>
                 <ListCard />
             </section>
+            <span className={`${openModal ? "opacity-50 pointer-events-all" : "opacity-0 pointer-events-none"} fixed z-50 w-full h-full top-0 left-0 bg-gray-900 transition-all duration-200`}></span>
+            <div onClick={() => setOpenModal(false)} className={`bg-white fixed w-screen h-screen z-50 left-0 top-0 ${openModal ? "translate-y-0" : "translate-y-full"} transition-transform duration-300 ease-in-out`}>
+
+            </div>
         </>
     )
 }

@@ -22,7 +22,7 @@ export default function Header() {
                     <svg className="shrink-0 w-10 h-10 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="oklch(70.7% 0.165 254.624)" viewBox="0 0 18 20">
                         <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"></path>
                     </svg>
-                    <span className="self-center text-2xl font-semibold text-blue-400 whitespace-nowrap dark:text-white">UVagre</span>
+                    <span className="self-center text-2xl font-semibold text-blue-400 whitespace-nowrap dark:text-white">Conecta Vagas</span>
                 </Link>
                 <button onClick={(e) => setIsOpen(true)} type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm hover:cursor-pointer text-blue-400 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-0 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
                     <span className="sr-only">Open main menu</span>
