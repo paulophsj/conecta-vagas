@@ -5,12 +5,7 @@ export default function SideBar() {
     let { isOpen, setIsOpen } = useSideBar()
     return (
         <>
-            {
-                //Modal ao abrir o menu hamburguer
-                isOpen && (
-                    <span onClick={() => setIsOpen(false)} className="fixed z-40 w-full h-full top-0 left-0 bg-gray-900 opacity-50"></span>
-                )
-            }
+            <span onClick={() => setIsOpen(false)} className={`${isOpen ? "opacity-50 pointer-events-all" : "opacity-0 pointer-events-none"} fixed z-50 w-full h-full top-0 left-0 bg-gray-900 transition-all duration-200`}></span>
 
             <div id="drawer-navigation" className={`fixed md:hidden lg:hidden top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform bg-white w-64 dark:bg-gray-800 ${isOpen ? "transform-none" : "-translate-x-full"}`} tabIndex="-1" aria-labelledby="drawer-navigation-label" aria-modal={isOpen} role={isOpen ? 'dialog' : ''} aria-hidden={isOpen ? '' : false}>
                 <h5 id="drawer-navigation-label" className="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">Menu</h5>
