@@ -28,7 +28,7 @@ export default function vaga_index() {
                 </div>
                 <ListCard />
                 <div className={`bg-white fixed w-screen h-screen z-50 p-4 max-sm:p-3 left-0 top-0 md:h-fit md:sticky md:max-h-screen justify-self-start md:z-40 grow md:top-23 shadow-md rounded-sm md:translate-y-0 flex flex-col justify-between ${openModal ? "translate-y-0" : "translate-y-full"} transition-transform duration-500 ease-in-out`}>
-                    <div className="flex flex-col gap-y-56 h-full">
+                    <div className="flex flex-col max-sm:gap-y-56 max-sm:h-full">
                         <div className="mb-2">
                             <header className="mb-2">
                                 <p className="font-bold text-lg">FILTROS</p>
@@ -124,7 +124,7 @@ export default function vaga_index() {
                                 </p>
                             </button>
                             <button onClick={() => setOpenModal(false)} className="md:text-sm max-sm:text-xs w-full justify-center cursor-pointer p-2 items-center rounded-sm text-white flex gap-3 bg-yellow-400 hover:bg-yellow-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="w-5 h-5 max-sm:w-3 max-sm:h-3 bi bi-eraser-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="white" className="w-5 h-5 max-sm:w-3 max-sm:h-3 bi bi-eraser-fill" viewBox="0 0 16 16">
                                     <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z" />
                                 </svg>
                                 <p>
