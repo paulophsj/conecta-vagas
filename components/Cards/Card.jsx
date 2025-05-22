@@ -37,7 +37,7 @@ export default function Card({ vagaEmprego }) {
                         </section>
                     </article>
                 ) : (
-                    <article className="w-44 h-40 flex flex-col justify-between">
+                    <article className="w-44 h-fit-content flex flex-col justify-between shadow-2xl rounded-sm p-2">
                         <header className="h-full flex flex-col justify-between">
                             <h2 className="text-blue-900 dark:text-white font-bold text-lg">{titulo}</h2>
                             <p className="font-semibold">{empresa}</p>
