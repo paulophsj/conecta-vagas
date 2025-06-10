@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useEffect } from "react"
-import { useSideBar } from "./SideBarProvider"
-import SideBar from "./SideBar"
+import { useSideBar } from "./SideBar/SideBarProvider"
+import SideBar from "./SideBar/SideBar"
 
 export default function Header() {
     const { isOpen, setIsOpen } = useSideBar()
@@ -40,10 +40,7 @@ export default function Header() {
                             <Link href={{ pathname: "/vagas" }} onClick={() => setIsOpen(false)} className="block py-2 px-3 font-bold text-blue-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-500 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Vagas</Link>
                         </li>
                         <li>
-                            <Link href={{ pathname: "/" }} onClick={() => setIsOpen(false)} className="block py-2 px-3 font-bold text-blue-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-500 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cadastrar Currículo</Link>
-                        </li>
-                        <li>
-                            <Link href={{ pathname: "/" }} onClick={() => setIsOpen(false)} className="block px-8 font-bold text-white bg-orange-400 rounded-sm hover:bg-orange-500 md:hover:bg-orange-500 md:border-0 md:hover:text-white md:px-4 md:py-1 dark:text-white md:dark:hover:text-white dark:hover:bg-orange-500 dark:hover:text-white md:dark:hover:bg-orange-500">Login</Link>
+                            <Link href={{ pathname: "/login" }} onClick={() => setIsOpen(false)} className="block px-8 font-bold text-white bg-orange-400 rounded-sm hover:bg-orange-500 md:hover:bg-orange-500 md:border-0 md:hover:text-white md:px-4 md:py-1 dark:text-white md:dark:hover:text-white dark:hover:bg-orange-500 dark:hover:text-white md:dark:hover:bg-orange-500">Login</Link>
                         </li>
                     </ul>
                 </div>
