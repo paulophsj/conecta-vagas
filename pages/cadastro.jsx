@@ -416,114 +416,114 @@ export default function candidato() {
                             {
                                 Array.from({ length: enderecos }).map((_, index) => (
                                     <div className="border-b border-gray-200 pb-6">
-                                <div className="flex justify-between max-md:flex-col items-start mb-4">
-                                    <h2 className="text-lg font-semibold text-gray-800">Endereço {index + 1}</h2>
-                                    <button
-                                        type="button"
-                                        className="text-sm bg-blue-100 text-blue-600 px-3 py-1 rounded hover:bg-blue-200 transition-colors"
-                                        onClick={() => setEnderecos(enderecos + 1)}
-                                    >
-                                        + Adicionar Endereço
-                                    </button>
-                                </div>
+                                        <div className="flex justify-between max-md:flex-col items-start mb-4">
+                                            <h2 className="text-lg font-semibold text-gray-800">Endereço {index + 1}</h2>
+                                            <button
+                                                type="button"
+                                                className="text-sm bg-blue-100 text-blue-600 px-3 py-1 rounded hover:bg-blue-200 transition-colors"
+                                                onClick={() => setEnderecos(enderecos + 1)}
+                                            >
+                                                + Adicionar Endereço
+                                            </button>
+                                        </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="mb-4">
-                                        <label htmlFor="cep" className="block text-gray-700 text-sm font-bold mb-2">
-                                            CEP
-                                        </label>
-                                        <IMaskInput
-                                            mask="00000-000"
-                                            type="text"
-                                            id="cep"
-                                            name="cep"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="00000-000"
-                                        />
-                                    </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="mb-4">
+                                                <label htmlFor="cep" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    CEP
+                                                </label>
+                                                <IMaskInput
+                                                    mask="00000-000"
+                                                    type="text"
+                                                    id="cep"
+                                                    name="cep"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="00000-000"
+                                                />
+                                            </div>
 
-                                    <div className="mb-4 md:col-span-2">
-                                        <label htmlFor="logradouro" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Logradouro
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="logradouro"
-                                            name="logradouro"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="Rua/Avenida"
-                                        />
-                                    </div>
+                                            <div className="mb-4 md:col-span-2">
+                                                <label htmlFor="logradouro" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Logradouro
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="logradouro"
+                                                    name="logradouro"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="Rua/Avenida"
+                                                />
+                                            </div>
 
-                                    <div className="mb-4">
-                                        <label htmlFor="numero" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Número
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="numero"
-                                            name="numero"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="Número"
-                                        />
-                                    </div>
+                                            <div className="mb-4">
+                                                <label htmlFor="numero" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Número
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="numero"
+                                                    name="numero"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="Número"
+                                                />
+                                            </div>
 
-                                    <div className="mb-4">
-                                        <label htmlFor="complemento" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Complemento
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="complemento"
-                                            name="complemento"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="Complemento"
-                                        />
-                                    </div>
+                                            <div className="mb-4">
+                                                <label htmlFor="complemento" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Complemento
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="complemento"
+                                                    name="complemento"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="Complemento"
+                                                />
+                                            </div>
 
-                                    <div className="mb-4">
-                                        <label htmlFor="bairro" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Bairro
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="bairro"
-                                            name="bairro"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="Bairro"
-                                        />
-                                    </div>
+                                            <div className="mb-4">
+                                                <label htmlFor="bairro" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Bairro
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="bairro"
+                                                    name="bairro"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="Bairro"
+                                                />
+                                            </div>
 
-                                    <div className="mb-4">
-                                        <label htmlFor="cidade" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Cidade
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="cidade"
-                                            name="cidade"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="Cidade"
-                                        />
-                                    </div>
+                                            <div className="mb-4">
+                                                <label htmlFor="cidade" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Cidade
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="cidade"
+                                                    name="cidade"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="Cidade"
+                                                />
+                                            </div>
 
-                                    <div className="mb-4">
-                                        <label htmlFor="estado" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Estado
-                                        </label>
-                                        <select
-                                            id="estado"
-                                            name="estado"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        >
-                                            <option value="">Selecione</option>
-                                            <option value="AC">Acre</option>
-                                            <option value="AL">Alagoas</option>
-                                            {/* Adicione todos os estados brasileiros */}
-                                        </select>
+                                            <div className="mb-4">
+                                                <label htmlFor="estado" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Estado
+                                                </label>
+                                                <select
+                                                    id="estado"
+                                                    name="estado"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                >
+                                                    <option value="">Selecione</option>
+                                                    <option value="AC">Acre</option>
+                                                    <option value="AL">Alagoas</option>
+                                                    {/* Adicione todos os estados brasileiros */}
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
                                 ))
                             }
 
