@@ -1,10 +1,23 @@
 import { createCandidato, createEndereco, createFormacao } from "@/api/Candidato";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
 
 export default function candidato() {
-    const [formacaoAcademica, setFormacaoAcademica] = useState(0);
-    const [enderecos, setEnderecos] = useState(0);
+    const [formacaoAcademica, setFormacaoAcademica] = useState(0)
+    const [enderecos, setEnderecos] = useState(0)
+
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [passwordsMatch, setPasswordsMatch] = useState(false)
+
+    useEffect(() => {
+        if(password === '' || confirmPassword === '') {
+            setPasswordsMatch(false)
+            return
+        }
+        setPasswordsMatch(password === confirmPassword)
+    }, [confirmPassword, password])
 
     const formSubmitHandler = async (event) => {
         event.preventDefault()
@@ -51,6 +64,7 @@ export default function candidato() {
             resumoProfissional: data.resumoProfissional,
             cargoPretendido: data.cargoPretendido,
             pretensaoSalarial: parseFloat(data.pretensaoSalarial.toString().replace('R$ ', '')),
+            ...(passwordsMatch ? { senha: password } : {}),
         }
         const formacaoAcademica = todosCursos
 
@@ -75,7 +89,7 @@ export default function candidato() {
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl">
                 <h1 className="text-2xl font-bold text-center text-blue-400 mb-8">Cadastro</h1>
 
-                <form className="space-y-8" onSubmit={formSubmitHandler}>
+                <form className="space-y-8" onSubmit={formSubmitHandler} autoComplete="off">
                     {/* Layout principal em grid (2 colunas em desktop) */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Coluna 1 - Informações Pessoais e Formação */}
@@ -143,162 +157,104 @@ export default function candidato() {
                                         />
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Seção de Formação Acadêmica */}
-                            <div className="border-b border-gray-200 pb-6">
-                                <div className="flex justify-between mb-4 max-md:flex-col items-start">
-                                    <h2 className="text-lg font-semibold text-gray-800">Formação Acadêmica</h2>
-                                    <button
-                                        type="button"
-                                        className="text-sm bg-blue-100 text-blue-600 px-3 py-1 cursor-pointer rounded hover:bg-blue-200 transition-colors"
-                                        onClick={() => setFormacaoAcademica(formacaoAcademica + 1)}
-                                    >
-                                        + Adicionar Formação
-                                    </button>
-                                </div>
-
                                 <div className="grid grid-cols-1 gap-4">
                                     <div className="mb-4">
-                                        <label htmlFor="curso" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Curso
+                                        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                                            Senha
                                         </label>
-                                        <input
-                                            type="text"
-                                            id="curso"
-                                            name="curso"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            placeholder="Nome do curso"
-                                        />
+                                        <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" autoComplete="new-password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        <span className={`text-sm ${password.length >= 6 ? 'text-green-500' : 'text-red-500'} flex gap-2 mt-2`}>
+                                            {
+                                                password.length < 6 ? (
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
+                                                    </svg>
+                                                ) :
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                                    </svg>
+                                            }
+                                            Deve ter pelo menos 6 caracteres
+                                        </span>
                                     </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="mb-4">
-                                            <label htmlFor="instituicao" className="block text-gray-700 text-sm font-bold mb-2">
-                                                Instituição
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="instituicao"
-                                                name="instituicao"
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                placeholder="Nome da instituição"
-                                            />
-                                        </div>
-
-                                        <div className="mb-4">
-                                            <label htmlFor="anoConclusao" className="block text-gray-700 text-sm font-bold mb-2">
-                                                Ano de Conclusão
-                                            </label>
-                                            <IMaskInput
-                                                mask="0000"
-                                                type="text"
-                                                id="anoConclusao"
-                                                name="anoConclusao"
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                placeholder="AAAA"
-                                            />
-                                        </div>
-                                    </div>
-
                                     <div className="mb-4">
-                                        <label htmlFor="nivelAcademico" className="block text-gray-700 text-sm font-bold mb-2">
-                                            Nível de Formação
+                                        <label htmlFor="confirmar-password" className={`block ${password.length < 6 ? 'text-gray-400' : 'text-gray-700'} text-sm font-bold mb-2`}>
+                                            Confirmar Senha
                                         </label>
-                                        <select
-                                            id="nivelAcademico"
-                                            name="nivelAcademico"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        >
-                                            <option value="">Selecione</option>
-                                            <option value="MEDIO">Ensino Médio</option>
-                                            <option value="TECNICO">Técnico</option>
-                                            <option value="TECNOLOGO">Tecnólogo</option>
-                                            <option value="GRADUACAO">Graduação</option>
-                                            <option value="POS_GRADUACAO">Pós-Graduação</option>
-                                            <option value="MESTRADO">Mestrado</option>
-                                            <option value="DOUTORADO">Doutorado</option>
-                                        </select>
+                                        <input type="password" disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
+                                        <span>
+                                            {
+                                                confirmPassword.length >= 6 && (
+                                                    passwordsMatch ?
+                                                        <span className="text-green-500 flex gap-2 mt-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                                            </svg>
+                                                            As senhas coincidem</span>
+                                                        :
+                                                        <span className="text-red-500 flex gap-2 mt-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
+                                                            </svg>
+                                                            As senhas não coincidem</span>
+                                                )
+                                            }
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            {
-                                Array.from({ length: formacaoAcademica }).map((_, index) => (
-                                    <div className="grid grid-cols-1 gap-4">
-                                        <div className="flex justify-between mb-4 max-md:flex-col items-start">
-                                            <h2 className="text-lg font-semibold text-gray-800">Formação Acadêmica {index + 1}</h2>
-                                            <button
-                                                type="button"
-                                                className="text-sm bg-blue-100 text-blue-600 px-3 py-1 cursor-pointer rounded hover:bg-blue-200 transition-colors"
-                                                onClick={() => setFormacaoAcademica(formacaoAcademica + 1)}
-                                            >
-                                                + Adicionar Formação
-                                            </button>
-                                        </div>
-                                        <div className="mb-4">
-                                            <label htmlFor="curso" className="block text-gray-700 text-sm font-bold mb-2">
-                                                Curso
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="curso"
-                                                name="curso"
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                placeholder="Nome do curso"
-                                            />
-                                        </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="mb-4">
-                                                <label htmlFor="instituicao" className="block text-gray-700 text-sm font-bold mb-2">
-                                                    Instituição
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="instituicao"
-                                                    name="instituicao"
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                    placeholder="Nome da instituição"
-                                                />
-                                            </div>
+                            {/* Seção de Informações Profissionais */}
+                            <div>
+                                <h2 className="text-lg font-semibold text-gray-800 mb-4">Informações Profissionais</h2>
 
-                                            <div className="mb-4">
-                                                <label htmlFor="anoConclusao" className="block text-gray-700 text-sm font-bold mb-2">
-                                                    Ano de Conclusão
-                                                </label>
-                                                <IMaskInput
-                                                    mask="0000"
-                                                    type="text"
-                                                    id="anoConclusao"
-                                                    name="anoConclusao"
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                    placeholder="AAAA"
-                                                />
-                                            </div>
-                                        </div>
+                                <div className="mb-4">
+                                    <label htmlFor="cargoPretendido" className="block text-gray-700 text-sm font-bold mb-2">
+                                        Cargo Pretendido
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="cargoPretendido"
+                                        name="cargoPretendido"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        placeholder="Cargo desejado"
+                                        required
+                                    />
+                                </div>
 
-                                        <div className="mb-4">
-                                            <label htmlFor="nivelAcademico" className="block text-gray-700 text-sm font-bold mb-2">
-                                                Nível de Formação
-                                            </label>
-                                            <select
-                                                id="nivelAcademico"
-                                                name="nivelAcademico"
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                            >
-                                                <option value="">Selecione</option>
-                                                <option value="MEDIO">Ensino Médio</option>
-                                                <option value="TECNICO">Técnico</option>
-                                                <option value="TECNOLOGO">Tecnólogo</option>
-                                                <option value="GRADUACAO">Graduação</option>
-                                                <option value="POS_GRADUACAO">Pós-Graduação</option>
-                                                <option value="MESTRADO">Mestrado</option>
-                                                <option value="DOUTORADO">Doutorado</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                                <div className="mb-4">
+                                    <label htmlFor="pretensaoSalarial" className="block text-gray-700 text-sm font-bold mb-2">
+                                        Pretensão Salarial
+                                    </label>
+                                    <IMaskInput
+                                        mask="R$ num"
+                                        blocks={{
+                                            num: {
+                                                mask: Number,
+                                            }
+                                        }}
+                                        type="text"
+                                        id="pretensaoSalarial"
+                                        name="pretensaoSalarial"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        placeholder="R$ 0,00"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="mb-6">
+                                    <label htmlFor="resumoProfissional" className="block text-gray-700 text-sm font-bold mb-2">
+                                        Resumo Profissional
+                                    </label>
+                                    <textarea
+                                        id="resumoProfissional"
+                                        name="resumoProfissional"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        rows="4"
+                                        required
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         {/* Coluna 2 - Endereço e Informações Profissionais */}
@@ -526,75 +482,180 @@ export default function candidato() {
                                     </div>
                                 ))
                             }
-
-                            {/* Seção de Informações Profissionais */}
-                            <div>
-                                <h2 className="text-lg font-semibold text-gray-800 mb-4">Informações Profissionais</h2>
-
-                                <div className="mb-4">
-                                    <label htmlFor="cargoPretendido" className="block text-gray-700 text-sm font-bold mb-2">
-                                        Cargo Pretendido
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="cargoPretendido"
-                                        name="cargoPretendido"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        placeholder="Cargo desejado"
-                                        required
-                                    />
+                            {/* Seção de Formação Acadêmica */}
+                            <div className="border-b border-gray-200 pb-6">
+                                <div className="flex justify-between mb-4 max-md:flex-col items-start">
+                                    <h2 className="text-lg font-semibold text-gray-800">Formação Acadêmica</h2>
+                                    <button
+                                        type="button"
+                                        className="text-sm bg-blue-100 text-blue-600 px-3 py-1 cursor-pointer rounded hover:bg-blue-200 transition-colors"
+                                        onClick={() => setFormacaoAcademica(formacaoAcademica + 1)}
+                                    >
+                                        + Adicionar Formação
+                                    </button>
                                 </div>
 
-                                <div className="mb-4">
-                                    <label htmlFor="pretensaoSalarial" className="block text-gray-700 text-sm font-bold mb-2">
-                                        Pretensão Salarial
-                                    </label>
-                                    <IMaskInput
-                                        mask="R$ num"
-                                        blocks={{
-                                            num: {
-                                                mask: Number,
-                                            }
-                                        }}
-                                        type="text"
-                                        id="pretensaoSalarial"
-                                        name="pretensaoSalarial"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        placeholder="R$ 0,00"
-                                        required
-                                    />
-                                </div>
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div className="mb-4">
+                                        <label htmlFor="curso" className="block text-gray-700 text-sm font-bold mb-2">
+                                            Curso
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="curso"
+                                            name="curso"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                            placeholder="Nome do curso"
+                                        />
+                                    </div>
 
-                                <div className="mb-6">
-                                    <label htmlFor="resumoProfissional" className="block text-gray-700 text-sm font-bold mb-2">
-                                        Resumo Profissional
-                                    </label>
-                                    <textarea
-                                        id="resumoProfissional"
-                                        name="resumoProfissional"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        rows="4"
-                                        required
-                                    />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="mb-4">
+                                            <label htmlFor="instituicao" className="block text-gray-700 text-sm font-bold mb-2">
+                                                Instituição
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="instituicao"
+                                                name="instituicao"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                placeholder="Nome da instituição"
+                                            />
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <label htmlFor="anoConclusao" className="block text-gray-700 text-sm font-bold mb-2">
+                                                Ano de Conclusão
+                                            </label>
+                                            <IMaskInput
+                                                mask="0000"
+                                                type="text"
+                                                id="anoConclusao"
+                                                name="anoConclusao"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                placeholder="AAAA"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="nivelAcademico" className="block text-gray-700 text-sm font-bold mb-2">
+                                            Nível de Formação
+                                        </label>
+                                        <select
+                                            id="nivelAcademico"
+                                            name="nivelAcademico"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        >
+                                            <option value="">Selecione</option>
+                                            <option value="MEDIO">Ensino Médio</option>
+                                            <option value="TECNICO">Técnico</option>
+                                            <option value="TECNOLOGO">Tecnólogo</option>
+                                            <option value="GRADUACAO">Graduação</option>
+                                            <option value="POS_GRADUACAO">Pós-Graduação</option>
+                                            <option value="MESTRADO">Mestrado</option>
+                                            <option value="DOUTORADO">Doutorado</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            {
+                                Array.from({ length: formacaoAcademica }).map((_, index) => (
+                                    <div className="grid grid-cols-1 gap-4">
+                                        <div className="flex justify-between mb-4 max-md:flex-col items-start">
+                                            <h2 className="text-lg font-semibold text-gray-800">Formação Acadêmica {index + 1}</h2>
+                                            <button
+                                                type="button"
+                                                className="text-sm bg-blue-100 text-blue-600 px-3 py-1 cursor-pointer rounded hover:bg-blue-200 transition-colors"
+                                                onClick={() => setFormacaoAcademica(formacaoAcademica + 1)}
+                                            >
+                                                + Adicionar Formação
+                                            </button>
+                                        </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="curso" className="block text-gray-700 text-sm font-bold mb-2">
+                                                Curso
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="curso"
+                                                name="curso"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                placeholder="Nome do curso"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="mb-4">
+                                                <label htmlFor="instituicao" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Instituição
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="instituicao"
+                                                    name="instituicao"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="Nome da instituição"
+                                                />
+                                            </div>
+
+                                            <div className="mb-4">
+                                                <label htmlFor="anoConclusao" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Ano de Conclusão
+                                                </label>
+                                                <IMaskInput
+                                                    mask="0000"
+                                                    type="text"
+                                                    id="anoConclusao"
+                                                    name="anoConclusao"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="AAAA"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <label htmlFor="nivelAcademico" className="block text-gray-700 text-sm font-bold mb-2">
+                                                Nível de Formação
+                                            </label>
+                                            <select
+                                                id="nivelAcademico"
+                                                name="nivelAcademico"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                            >
+                                                <option value="">Selecione</option>
+                                                <option value="MEDIO">Ensino Médio</option>
+                                                <option value="TECNICO">Técnico</option>
+                                                <option value="TECNOLOGO">Tecnólogo</option>
+                                                <option value="GRADUACAO">Graduação</option>
+                                                <option value="POS_GRADUACAO">Pós-Graduação</option>
+                                                <option value="MESTRADO">Mestrado</option>
+                                                <option value="DOUTORADO">Doutorado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full lg:w-1/2 mx-auto block cursor-pointer bg-blue-400 text-white py-2 px-4 rounded-md hover:bg-blue-500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                        className={`w-full lg:w-1/2 mx-auto block cursor-pointer ${passwordsMatch ? 'bg-blue-400' : 'bg-gray-300 pointer-events-none'} text-white py-2 px-4 rounded-md hover:bg-blue-500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50`}
+                        disabled={!passwordsMatch}
                     >
-                        Enviar Candidatura
+                        {
+                            passwordsMatch ? 'Enviar Candidatura' : 'As senhas não coincidem'
+                        }
                     </button>
                 </form>
 
                 <div className="mt-4 text-center">
                     <p className="text-sm text-gray-600">
                         Ao enviar, você concorda com nossos{' '}
-                        <a href="#" className="text-blue-400 hover:underline">
+                        <Link href={{pathname: '/'}} className="text-blue-400 hover:underline">
                             Termos de Uso
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>
