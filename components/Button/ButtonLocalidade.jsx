@@ -48,7 +48,7 @@ export default function ButtonLocalidade() {
                         </div>
                         <div className="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                             <button data-modal-hide="default-modal" type="button" className="cursor-pointer text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Definir</button>
-                            <button onClick={() => setOpenModal(false)} data-modal-hide="default-modal" type="button" className="cursor-pointer py-2.5 px-5 ms-3 text-sm font-bold text-gray-900 focus:outline-none bg-red-400 text-white rounded-lg border border-gray-200 hover:bg-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Fechar</button>
+                            <button onClick={() => setOpenModal(false)} data-modal-hide="default-modal" type="button" className="cursor-pointer py-2.5 px-5 ms-3 text-sm font-bold text-gray-900 focus:outline-none bg-red-400 rounded-lg border border-gray-200 hover:bg-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Fechar</button>
                         </div>
                     </div>
                 </div>
