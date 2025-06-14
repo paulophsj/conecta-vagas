@@ -11,8 +11,12 @@ export default function candidato() {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [passwordsMatch, setPasswordsMatch] = useState(false)
 
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+
     useEffect(() => {
-        if(password === '' || confirmPassword === '') {
+        if (password === '' || confirmPassword === '') {
             setPasswordsMatch(false)
             return
         }
@@ -162,44 +166,92 @@ export default function candidato() {
                                         <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
                                             Senha
                                         </label>
-                                        <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" autoComplete="new-password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                        <div className="relative">
+                                            <input type={showPassword ? 'text' : 'password'} minLength={6} maxLength={15} required value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" autoComplete="new-password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                            <button className={`text-gray-700 absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowPassword(!showPassword)}>
+                                                {
+                                                    showPassword ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                                        <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
+                                                        <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z" />
+                                                    </svg> :
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                        </svg>
+                                                }
+                                            </button>
+                                        </div>
                                         <span className={`text-sm ${password.length >= 6 ? 'text-green-500' : 'text-red-500'} flex gap-2 mt-2`}>
                                             {
                                                 password.length < 6 ? (
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                                     </svg>
                                                 ) :
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
                                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                                     </svg>
                                             }
                                             Deve ter pelo menos 6 caracteres
                                         </span>
+                                        {
+                                            password.length === 15 && (
+                                                <span className="text-yellow-500 flex gap-2 mt-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                                        <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
+                                                    </svg>
+                                                    A senha não pode ter mais de 15 caracteres
+                                                </span>
+                                            )
+                                        }
                                     </div>
                                     <div className="mb-4">
                                         <label htmlFor="confirmar-password" className={`block ${password.length < 6 ? 'text-gray-400' : 'text-gray-700'} text-sm font-bold mb-2`}>
                                             Confirmar Senha
                                         </label>
-                                        <input type="password" disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
+                                        <div className="relative">
+                                            <input type={showConfirmPassword ? 'text' : 'password'} minLength={6} maxLength={15} disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
+                                            <button className={`${password.length < 6 ? 'text-gray-400' : 'text-gray-700'} absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                                {
+                                                    showConfirmPassword ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                                        <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
+                                                        <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z" />
+                                                    </svg> :
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                        </svg>
+                                                }
+                                            </button>
+                                        </div>
                                         <span>
                                             {
                                                 confirmPassword.length >= 6 && (
                                                     passwordsMatch ?
                                                         <span className="text-green-500 flex gap-2 mt-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
                                                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                                             </svg>
                                                             As senhas coincidem</span>
                                                         :
                                                         <span className="text-red-500 flex gap-2 mt-2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                                             </svg>
                                                             As senhas não coincidem</span>
                                                 )
                                             }
                                         </span>
+                                        {
+                                            confirmPassword.length === 15 && (
+                                                <span className="text-yellow-500 flex gap-2 mt-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                                        <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
+                                                    </svg>
+                                                    A senha não pode ter mais de 15 caracteres
+                                                </span>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -653,7 +705,7 @@ export default function candidato() {
                 <div className="mt-4 text-center">
                     <p className="text-sm text-gray-600">
                         Ao enviar, você concorda com nossos{' '}
-                        <Link href={{pathname: '/'}} className="text-blue-400 hover:underline">
+                        <Link href={{ pathname: '/' }} className="text-blue-400 hover:underline">
                             Termos de Uso
                         </Link>
                     </p>
