@@ -1,20 +1,10 @@
+import useLocalidades from "@/hooks/Localidades"
 import { useEffect, useState } from "react"
 
 export default function ButtonLocalidade() {
-    const [localidades, setLocalidades] = useState([])
     const [openModal, setOpenModal] = useState(false)
-    useEffect(() => {
-        const findLocalidades = async () => {
-            await fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados/")
-            .then((response) => {response.json().then((data) => {
-                setLocalidades(data)
-            })})
-            .catch((err) => {
-                console.err(err)
-            })
-        }
-        findLocalidades()
-    }, [])
+    const {error, loading, localidades} = useLocalidades()
+
     useEffect(() => {
         if (openModal) {
             document.body.style.overflow = "hidden"
@@ -50,8 +40,8 @@ export default function ButtonLocalidade() {
                             <select name="Opções" id="" defaultValue="1">
                                 <option value="1" disabled>Selecionar Estado</option>
                                 {
-                                    localidades.map((localidades) => (
-                                        <option value={localidades.id}>{localidades.nome}</option>
+                                    localidades.map((localidade) => (
+                                        <option key={localidade.id} value={localidade.sigla}>{localidade.nome}</option>
                                     ))
                                 }
                             </select>

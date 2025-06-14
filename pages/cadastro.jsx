@@ -1,4 +1,5 @@
 import { createCandidato, createEndereco, createFormacao } from "@/api/Candidato";
+import useLocalidades from "@/hooks/Localidades";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
@@ -13,6 +14,8 @@ export default function candidato() {
 
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+    const { error, loading, localidades } = useLocalidades()
 
 
     useEffect(() => {
@@ -168,7 +171,7 @@ export default function candidato() {
                                         </label>
                                         <div className="relative">
                                             <input type={showPassword ? 'text' : 'password'} minLength={6} maxLength={15} required value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" autoComplete="new-password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                                            <button className={`text-gray-700 absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowPassword(!showPassword)}>
+                                            <button tabIndex={-1} className={`cursor-pointer text-gray-700 absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowPassword(!showPassword)}>
                                                 {
                                                     showPassword ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
                                                         <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
@@ -196,7 +199,7 @@ export default function candidato() {
                                         </span>
                                         {
                                             password.length === 15 && (
-                                                <span className="text-yellow-500 flex gap-2 mt-2">
+                                                <span className="text-yellow-500 flex gap-2 mt-2 text-sm">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                                                         <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
                                                     </svg>
@@ -211,7 +214,7 @@ export default function candidato() {
                                         </label>
                                         <div className="relative">
                                             <input type={showConfirmPassword ? 'text' : 'password'} minLength={6} maxLength={15} disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
-                                            <button className={`${password.length < 6 ? 'text-gray-400' : 'text-gray-700'} absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                            <button tabIndex={-1} className={`cursor-pointer ${password.length < 6 ? 'text-gray-400 pointer-events-none' : 'text-gray-700 pointer-events-all'} absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                                                 {
                                                     showConfirmPassword ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
                                                         <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
@@ -228,13 +231,13 @@ export default function candidato() {
                                             {
                                                 confirmPassword.length >= 6 && (
                                                     passwordsMatch ?
-                                                        <span className="text-green-500 flex gap-2 mt-2">
+                                                        <span className="text-green-500 flex gap-2 mt-2 text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
                                                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                                             </svg>
                                                             As senhas coincidem</span>
                                                         :
-                                                        <span className="text-red-500 flex gap-2 mt-2">
+                                                        <span className="text-red-500 flex gap-2 mt-2 text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                                             </svg>
@@ -244,7 +247,7 @@ export default function candidato() {
                                         </span>
                                         {
                                             confirmPassword.length === 15 && (
-                                                <span className="text-yellow-500 flex gap-2 mt-2">
+                                                <span className="text-yellow-500 flex gap-2 mt-2 text-sm">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                                                         <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
                                                     </svg>
@@ -412,10 +415,15 @@ export default function candidato() {
                                             id="estado"
                                             name="estado"
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                            defaultValue={1}
                                         >
-                                            <option value="">Selecione</option>
-                                            <option value="AC">Acre</option>
-                                            <option value="AL">Alagoas</option>
+                                            <option value="1" disabled>Selecionar Estado</option>
+
+                                            {
+                                                localidades.map((localidade) => (
+                                                    <option key={localidade.id} value={localidade.sigla}>{localidade.nome}</option>
+                                                ))
+                                            }
                                             {/* Adicione todos os estados brasileiros */}
                                         </select>
                                     </div>
@@ -523,10 +531,15 @@ export default function candidato() {
                                                     id="estado"
                                                     name="estado"
                                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    defaultValue={1}
                                                 >
-                                                    <option value="">Selecione</option>
-                                                    <option value="AC">Acre</option>
-                                                    <option value="AL">Alagoas</option>
+                                                    <option value="1" disabled>Selecionar Estado</option>
+
+                                                    {
+                                                        localidades.map((localidade) => (
+                                                            <option key={localidade.id} value={localidade.sigla}>{localidade.nome}</option>
+                                                        ))
+                                                    }
                                                     {/* Adicione todos os estados brasileiros */}
                                                 </select>
                                             </div>
