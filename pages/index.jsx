@@ -1,9 +1,24 @@
-import ButtonLocalidade from "@/components/Button/ButtonLocalidade";
 import ListCard from "@/components/Cards/ListCard";
 import ListComments from "@/components/Comments/ListComments";
+import useLocalidades from "@/hooks/Localidades";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function index() {
+    const { localidades } = useLocalidades()
+    const [valoresBuscados, setValoresBuscados] = useState(null)
+
+    const [inputEstado, setInputEstado] = useState(null)
+
+    const showOpcoes = (e) => {
+        if (e.length >= 1) {
+            const opcoes = localidades.filter((localidade) => localidade.nome.toLowerCase().includes(e.toLowerCase()))
+            setValoresBuscados(opcoes)
+        }
+        else {
+            setValoresBuscados(null)
+        }
+    }
     return (
         <>
             <section className="container mx-auto p-15 max-sm:p-10 flex flex-col items-center gap-10">
@@ -13,8 +28,46 @@ export default function index() {
                 <form className="w-4xl flex justify-center gap-2 max-sm:flex-col max-sm:w-full max-lg:w-full">
                     <div className="w-full flex gap-2">
                         <input type="text" className="shadow-sm shadow-blue-400 placeholder:text-sm w-full max-sm:h-10 placeholder:text-blue-900 dark:placeholder:text-white p-2 max-sm:pl-3 focus:outline-1 focus:outline-blue-400 rounded-sm placeholder:text-center h-full" placeholder="O que você procura?(ex.: vendedor, TI...)" />
-                        <input type="text" className="max-sm:hidden shadow-sm shadow-blue-400 placeholder:text-sm w-full max-sm:h-10 placeholder:text-blue-900 dark:placeholder:text-white p-2 focus:outline-1 focus:outline-blue-400 rounded-sm placeholder:text-center h-full" placeholder="Localização (Cidade/Estado)" />
-                        <ButtonLocalidade />
+                        <div className="w-full relative hidden md:block">
+                            <input
+                            type="text"
+                            id="buscar-localidade"
+                            value={inputEstado}
+                            onChange={(e) => {
+                                setInputEstado(e.target.value)
+                                showOpcoes(e.target.value)
+                            }}
+                            autoComplete="off"
+                            className="max-sm:hidden shadow-sm shadow-blue-400 placeholder:text-sm w-full max-sm:h-10 placeholder:text-blue-900 dark:placeholder:text-white p-2 focus:outline-1 focus:outline-blue-400 rounded-sm placeholder:text-center h-full"
+                            placeholder="Localização (Cidade/Estado)"
+                        />
+                            {
+                                valoresBuscados && valoresBuscados.length > 0 ? (
+                                    <div className="absolute w-full z-10 max-sm:w-80 max-sm:top-10 max-sm:left-0 bg-white dark:bg-gray-800 shadow-lg rounded-md border border-blue-100 dark:border-gray-600">
+                                        <ul className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-50 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800">
+                                            {valoresBuscados.map((localidade) => (
+                                                <li
+                                                    key={localidade.id}
+                                                    onClick={() => {
+                                                        setInputEstado(localidade.nome)
+                                                        setValoresBuscados(null);
+                                                    }}
+                                                    className="p-3 hover:bg-blue-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200 border-b border-blue-50 dark:border-gray-700 last:border-b-0 flex items-center"
+                                                >
+                                                    <svg className="w-4 h-4 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                    <span className="text-blue-800 dark:text-blue-100 font-medium">
+                                                        {localidade.nome}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : null
+                            }
+                        </div>
                     </div>
                     <button className="bg-orange-400 max-sm:h-10 p-5 rounded-sm flex items-center justify-center gap-4 hover:bg-orange-500 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-search" viewBox="0 0 16 16">

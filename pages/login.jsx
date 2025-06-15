@@ -10,8 +10,8 @@ export default function LoginPage() {
 
     }
     return (
-        <div className="flex w-4/6 justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div className="flex justify-center p-4 w-full md:w-2xl">
+            <div className="bg-white p-8 rounded-lg shadow-md w-full">
                 <h1 className="text-2xl font-bold text-center text-blue-400 mb-6">Login</h1>
 
                 <form onSubmit={handleSubmit}>
