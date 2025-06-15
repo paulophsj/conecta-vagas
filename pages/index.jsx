@@ -1,19 +1,20 @@
 import ListCard from "@/components/Cards/ListCard";
 import ListComments from "@/components/Comments/ListComments";
-import useLocalidades from "@/hooks/Localidades";
+import { useLocalidades } from "@/hooks/Localidades";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function index() {
-    const { localidades } = useLocalidades()
+    const { estados, municipios } = useLocalidades()
     const [valoresBuscados, setValoresBuscados] = useState(null)
 
     const [inputEstado, setInputEstado] = useState(null)
 
     const showOpcoes = (e) => {
         if (e.length >= 1) {
-            const opcoes = localidades.filter((localidade) => localidade.nome.toLowerCase().includes(e.toLowerCase()))
-            setValoresBuscados(opcoes)
+            const opcoesEstados = estados.filter((estado) => estado.nome.toLowerCase().includes(e.toLowerCase()))
+            const opcoesMunicipios = municipios.filter((municipio) => municipio.nome?.toLowerCase().includes(e.toLowerCase())).map((value) => ({ nome: value?.nome, uf: value?.microrregiao?.mesorregiao?.UF?.nome }))
+            setValoresBuscados([...opcoesEstados, ...opcoesMunicipios])
         }
         else {
             setValoresBuscados(null)
@@ -49,7 +50,7 @@ export default function index() {
                                                 <li
                                                     key={localidade.id}
                                                     onClick={() => {
-                                                        setInputEstado(localidade.nome)
+                                                        setInputEstado(localidade.nome + (localidade?.uf ? `, ${localidade.uf}` : ''))
                                                         setValoresBuscados(null);
                                                     }}
                                                     className="p-3 hover:bg-blue-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200 border-b border-blue-50 dark:border-gray-700 last:border-b-0 flex items-center"
@@ -60,6 +61,11 @@ export default function index() {
                                                     </svg>
                                                     <span className="text-blue-800 dark:text-blue-100 font-medium">
                                                         {localidade.nome}
+                                                        {
+                                                            localidade?.uf && (
+                                                                `, ${localidade.uf}`
+                                                            )
+                                                        }
                                                     </span>
                                                 </li>
                                             ))}
