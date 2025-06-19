@@ -1,4 +1,5 @@
 import { createCandidato, createEndereco, createFormacao } from "@/api/Candidato";
+import { createRecrutador } from "@/api/Recrutador";
 import Cidades from "@/components/Inputs/Cidades";
 import Estados from "@/components/Inputs/Estados";
 import Toast from "@/components/Toast/Toast";
@@ -35,13 +36,28 @@ export default function candidato() {
         setPasswordsMatch(password === confirmPassword)
     }, [confirmPassword, password])
 
+    useEffect(() => {
+        document.getElementById('form').reset()
+
+        setFormacaoAcademica(0)
+        setEnderecos(0)
+        setPassword('')
+        setConfirmPassword('')
+        setPasswordsMatch(false)
+        setShowPassword(false)
+        setShowConfirmPassword(false)
+        setIsValidEmail(false)
+        setToastState({ message: null, isError: null })
+        setSelectedEstado(null)
+    }, [isCandidato])
+
     const formSubmitHandler = async (event) => {
         event.preventDefault()
         const formData = new FormData(event.target)
         const data = Object.fromEntries(formData.entries())
 
-        if(data.tipoPerfil === 0){
-            return await salvarRecrutador(data)
+        if(!isCandidato){
+            return await salvarRecrutador({...data, tipoPerfil: {}, senha: password})
         }
 
         // Coletando os dados de formação acadêmica
@@ -83,6 +99,7 @@ export default function candidato() {
             numeroTelefone: data.numeroTelefone,
             resumoProfissional: data.resumoProfissional,
             cargoPretendido: data.cargoPretendido,
+            email: data.email,
             pretensaoSalarial: parseFloat(data.pretensaoSalarial?.toString().replace('R$ ', '')),
             ...(passwordsMatch ? { senha: password } : {}),
         }
@@ -103,7 +120,12 @@ export default function candidato() {
         }
     }
     const salvarRecrutador = async (recrutadorProfile) => {
-        
+            try {
+            await createRecrutador(recrutadorProfile)
+            setToastState({ message: "Você foi cadastrado com sucesso! Redirecionando...", isError: false })
+        } catch (error) {
+            setToastState({ message: "Erro ao cadastrar. Erro: " + error.message, isError: true })
+        }
     }
     const handleEmail = (e) => {
         if (e.includes("@") && e.includes(".com")) setIsValidEmail(true)
@@ -118,7 +140,7 @@ export default function candidato() {
                 <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl">
                     <h1 className="text-2xl font-bold text-center text-blue-400 mb-8">Cadastro</h1>
 
-                    <form className="space-y-8" onSubmit={formSubmitHandler} autoComplete="off">
+                    <form id="form" className="space-y-8" onSubmit={formSubmitHandler} autoComplete="off">
                         <div className="">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Tipo de perfil</h2>
                             <select name="tipoPerfil" onChange={(e) => setIsCandidato(Boolean(Number(e.target.value)))} defaultValue={isCandidato} className=" w-full lg:w-auto px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
@@ -203,7 +225,7 @@ export default function candidato() {
                                             <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                                                 Email
                                             </label>
-                                            <input onChange={(e) => handleEmail(e.target.value)} type="email" id="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                            <input onChange={(e) => handleEmail(e.target.value)} type="email" id="email" name="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
                                             <span className={`text-sm ${isValidEmail ? 'text-green-500' : 'text-red-500'} flex gap-2 mt-2`}>
                                                 {
                                                     !isValidEmail ? (
@@ -620,7 +642,7 @@ export default function candidato() {
                                                             </select>
                                                         </div>
                                                         <div>
-                                                            <label for="qtdFuncionarios" class="block text-gray-700 text-sm font-bold mb-2">Nº de Funcionários</label>
+                                                            <label for="numeroFuncionarios" class="block text-gray-700 text-sm font-bold mb-2">Nº de Funcionários</label>
                                                             <IMaskInput
                                                                 mask="num"
                                                                 blocks={{
@@ -629,8 +651,8 @@ export default function candidato() {
                                                                     }
                                                                 }}
                                                                 type="text"
-                                                                id="qtdFuncionarios"
-                                                                name="qtdFuncionarios"
+                                                                id="numeroFuncionarios"
+                                                                name="numeroFuncionarios"
                                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                                 placeholder="Quantidade"
                                                             />
@@ -663,12 +685,12 @@ export default function candidato() {
                                                 </div>
 
                                                 <div class="mb-6">
-                                                    <label for="culturaOrganizacional" class="block text-gray-700 text-sm font-bold mb-2">
+                                                    <label for="descricaoEmpresa" class="block text-gray-700 text-sm font-bold mb-2">
                                                         Cultura Organizacional (descreva em poucas palavras)
                                                     </label>
                                                     <textarea
-                                                        id="culturaOrganizacional"
-                                                        name="culturaOrganizacional"
+                                                        id="descricaoEmpresa"
+                                                        name="descricaoEmpresa"
                                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                         rows="5"
                                                         placeholder="Ex: Ambiente dinâmico, foco em inovação, horários flexíveis..."
