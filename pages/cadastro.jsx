@@ -609,7 +609,7 @@ export default function candidato() {
                                                         <div>
                                                             <div className="mb-4">
                                                                 <label htmlFor="anoFundacao" className="block text-gray-700 text-sm font-bold mb-2">
-                                                                    Ano de Funcação
+                                                                    Ano de Fundação
                                                                 </label>
                                                                 <IMaskInput
                                                                     mask="0000"
