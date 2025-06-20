@@ -19,7 +19,7 @@ export default function vaga_index() {
             <span className={`${openModal ? "opacity-50 pointer-events-all" : "opacity-0 pointer-events-none"} fixed z-50 w-full h-full top-0 left-0 bg-gray-900 transition-all duration-200`}></span>
             <section className="container p-5 mx-auto flex flex-col gap-5 md:flex-row">
                 <div className="w-full md:hidden">
-                    <button type="button" onClick={() => setOpenModal(true)} className="flex items-center gap-2 bg-orange-400 hover:bg-orange-500 cursor-pointer p-2 rounded-md">
+                    <button type="button" onClick={() => setOpenModal(true)} className="flex items-center gap-2 bg-blue-400 hover:bg-blue-500 cursor-pointer p-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-sliders2" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
                         </svg>
@@ -96,9 +96,9 @@ export default function vaga_index() {
                                         </label>
                                         <label className="flex gap-2 items-center w-full" htmlFor="faixaSalarial">
                                             Entre
-                                            <input type="number" min={100} className="w-full shadow-lg focus:outline-1 outline-orange-500 p-1 rounded-sm" placeholder="R$ 150,00" />
+                                            <input type="number" min={100} className="w-full shadow-lg focus:outline-1 outline-blue-500 p-1 rounded-sm" placeholder="R$ 150,00" />
                                             e
-                                            <input type="number" max={7200} className="w-full shadow-lg focus:outline-1 outline-orange-500 p-1 rounded-sm" placeholder="R$ 7200,00" />
+                                            <input type="number" max={7200} className="w-full shadow-lg focus:outline-1 outline-blue-500 p-1 rounded-sm" placeholder="R$ 7200,00" />
                                         </label>
                                     </li>
                                 </ul>

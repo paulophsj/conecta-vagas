@@ -56,8 +56,8 @@ export default function candidato() {
         const formData = new FormData(event.target)
         const data = Object.fromEntries(formData.entries())
 
-        if(!isCandidato){
-            return await salvarRecrutador({...data, tipoPerfil: {}, senha: password})
+        if (!isCandidato) {
+            return await salvarRecrutador({ ...data, tipoPerfil: {}, senha: password })
         }
 
         // Coletando os dados de formação acadêmica
@@ -120,7 +120,7 @@ export default function candidato() {
         }
     }
     const salvarRecrutador = async (recrutadorProfile) => {
-            try {
+        try {
             await createRecrutador(recrutadorProfile)
             setToastState({ message: "Você foi cadastrado com sucesso! Redirecionando...", isError: false })
         } catch (error) {
@@ -156,7 +156,7 @@ export default function candidato() {
                                 {/* Seção de Informações Pessoais */}
                                 <div className="w-full">
                                     <h2 className="text-lg font-semibold text-gray-800 mb-4">Informações Pessoais</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                         <div className="mb-4">
                                             <label htmlFor={isCandidato ? "cpf" : "cnpj"} className="block text-gray-700 text-sm font-bold mb-2">
                                                 {
@@ -190,20 +190,20 @@ export default function candidato() {
                                         </div>
                                         {
                                             isCandidato &&
-                                                <div className="mb-4">
-                                                    <label htmlFor="dataNascimento" className="block text-gray-700 text-sm font-bold mb-2">
-                                                        Data Nascimento
-                                                    </label>
-                                                    <IMaskInput
-                                                        mask="00/00/0000"
-                                                        type="text"
-                                                        id="dataNascimento"
-                                                        name="dataNascimento"
-                                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                        placeholder="DD/MM/AAAA"
-                                                        required
-                                                    />
-                                                </div>
+                                            <div className="mb-4">
+                                                <label htmlFor="dataNascimento" className="block text-gray-700 text-sm font-bold mb-2">
+                                                    Data Nascimento
+                                                </label>
+                                                <IMaskInput
+                                                    mask="00/00/0000"
+                                                    type="text"
+                                                    id="dataNascimento"
+                                                    name="dataNascimento"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                    placeholder="DD/MM/AAAA"
+                                                    required
+                                                />
+                                            </div>
                                         }
                                         <div className={`mb-4 ${isCandidato ? "" : "col-span-2"}`}>
                                             <label htmlFor="numeroTelefone" className="block text-gray-700 text-sm font-bold mb-2">
@@ -349,6 +349,12 @@ export default function candidato() {
                                                     <div className="border-b border-gray-200 py-6" key={index}>
                                                         <div className="flex justify-between max-md:flex-col items-start mb-4">
                                                             <h2 className="text-lg font-semibold text-gray-800">Endereço {index + 1}</h2>
+                                                            <button>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                </svg>
+                                                            </button>
                                                         </div>
 
                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -516,7 +522,12 @@ export default function candidato() {
                                                     <div className="border-b border-gray-200 py-6" key={index}>
                                                         <div className="flex justify-between mb-4 max-md:flex-col items-start">
                                                             <h2 className="text-lg font-semibold text-gray-800">Formação Acadêmica {index + 1}</h2>
-
+                                                            <button>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                </svg>
+                                                            </button>
                                                         </div>
                                                         <div className="grid grid-cols-1 gap-4">
                                                             <div className="mb-4">

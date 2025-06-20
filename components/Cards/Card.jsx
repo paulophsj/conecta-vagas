@@ -9,7 +9,7 @@ export default function Card({ vagaEmprego }) {
             {
                 pathname == "/vagas" ? (
                     <article className="border w-full">
-                        <header className="bg-blue-900 flex p-4 items-center gap-5">
+                        <header className="bg-blue-400 flex p-4 items-center gap-5">
                             <span className="border border-white w-10 h-10 rounded-full"></span>
                             <h2 className="text-white font-bold dark:text-white">{titulo}</h2>
                         </header>
@@ -31,7 +31,7 @@ export default function Card({ vagaEmprego }) {
                             <p>
                                 {descricao}
                             </p>
-                            <Link href={{ pathname: "/vagas/[id]", query: { id: id } }} className="bg-orange-400 text-white p-2 font-bold self-end hover:bg-orange-500 rounded text-sm">
+                            <Link href={{ pathname: "/vagas/[id]", query: { id: id } }} className="bg-blue-400 text-white p-2 font-bold self-end hover:bg-blue-500 rounded text-sm">
                                 VER MAIS
                             </Link>
                         </section>
@@ -39,7 +39,7 @@ export default function Card({ vagaEmprego }) {
                 ) : (
                     <article className="w-44 h-fit-content flex flex-col justify-between shadow-2xl rounded-sm p-2">
                         <header className="h-full flex flex-col justify-between">
-                            <h2 className="text-blue-900 dark:text-white font-bold text-lg">{titulo}</h2>
+                            <h2 className="text-blue-400 dark:text-white font-bold text-lg">{titulo}</h2>
                             <p className="font-semibold">{empresa}</p>
                         </header>
                         <section>
@@ -51,7 +51,7 @@ export default function Card({ vagaEmprego }) {
                                     pathname: "/vagas/[id]",
                                     query: { id: id }
                                 }}
-                                className="bg-orange-400 hover:bg-orange-500 p-2 text-white text-center rounded-sm w-full block"
+                                className="bg-blue-400 hover:bg-blue-500 p-2 text-white text-center rounded-sm w-full block"
                             >
                                 Ver mais
                             </Link>
