@@ -647,6 +647,8 @@ export default function candidato() {
                                                                 defaultValue={""}
                                                             >
                                                                 <option value="" disabled selected>Selecione</option>
+                                                                <option value="MEI">MEI</option>
+                                                                <option value="MICRO">Microempresa</option>
                                                                 <option value="PEQUENA">Pequena</option>
                                                                 <option value="MEDIA">Média</option>
                                                                 <option value="GRANDE">Grande</option>

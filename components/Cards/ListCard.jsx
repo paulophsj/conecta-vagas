@@ -19,7 +19,7 @@ export default function ListCard({ quantidade }) {
         <>
             {
                 pathname == "/vagas" ? (
-                    <ul className="flex flex-col md:w-dvw gap-3">
+                    <ul className="flex flex-col w-full gap-3">
                         {cards}
                     </ul>
 
