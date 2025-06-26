@@ -275,12 +275,12 @@ export default function candidato() {
                                                 Deve ter pelo menos 6 caracteres
                                             </span>
                                             {
-                                                password.length === 15 && (
+                                                password.length === 50 && (
                                                     <span className="text-yellow-500 flex gap-2 mt-2 text-sm">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                                                             <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
                                                         </svg>
-                                                        A senha não pode ter mais de 15 caracteres
+                                                        A senha não pode ter mais de 50 caracteres
                                                     </span>
                                                 )
                                             }
@@ -323,12 +323,12 @@ export default function candidato() {
                                                 }
                                             </span>
                                             {
-                                                confirmPassword.length === 15 && (
+                                                confirmPassword.length === 50 && (
                                                     <span className="text-yellow-500 flex gap-2 mt-2 text-sm">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                                                             <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
                                                         </svg>
-                                                        A senha não pode ter mais de 15 caracteres
+                                                        A senha não pode ter mais de 50 caracteres
                                                     </span>
                                                 )
                                             }
