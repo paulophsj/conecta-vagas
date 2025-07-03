@@ -247,7 +247,7 @@ export default function candidato() {
                                                 Senha
                                             </label>
                                             <div className="relative">
-                                                <input type={showPassword ? 'text' : 'password'} minLength={6} maxLength={15} required value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" autoComplete="new-password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                                <input type={showPassword ? 'text' : 'password'} minLength={6} maxLength={50} required value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" autoComplete="new-password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
                                                 <button tabIndex={-1} className={`cursor-pointer text-gray-700 absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowPassword(!showPassword)}>
                                                     {
                                                         showPassword ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
@@ -275,12 +275,12 @@ export default function candidato() {
                                                 Deve ter pelo menos 6 caracteres
                                             </span>
                                             {
-                                                password.length === 15 && (
+                                                password.length === 50 && (
                                                     <span className="text-yellow-500 flex gap-2 mt-2 text-sm">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                                                             <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
                                                         </svg>
-                                                        A senha não pode ter mais de 15 caracteres
+                                                        A senha não pode ter mais de 50 caracteres
                                                     </span>
                                                 )
                                             }
@@ -290,7 +290,7 @@ export default function candidato() {
                                                 Confirmar Senha
                                             </label>
                                             <div className="relative">
-                                                <input type={showConfirmPassword ? 'text' : 'password'} minLength={6} maxLength={15} disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
+                                                <input type={showConfirmPassword ? 'text' : 'password'} minLength={6} maxLength={50} disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
                                                 <button tabIndex={-1} className={`cursor-pointer ${password.length < 6 ? 'text-gray-400 pointer-events-none' : 'text-gray-700 pointer-events-all'} absolute inset-y-0 right-0 px-3 flex items-center`} type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                                                     {
                                                         showConfirmPassword ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
@@ -323,12 +323,12 @@ export default function candidato() {
                                                 }
                                             </span>
                                             {
-                                                confirmPassword.length === 15 && (
+                                                confirmPassword.length === 50 && (
                                                     <span className="text-yellow-500 flex gap-2 mt-2 text-sm">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                                                             <path d="M8.982 1.566a1.5 1.5 0 0 0-2.964 0L.165 13.233A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.335-2.767L8.982 1.566zM7.002 6a1 1 0 1 1 2 .001v3a1 1 0 0 1-2 .001V6zm1.002 6a1.002 1.002 0 1 1 .001-2.004A1.002 1.002 0 0 1 8.004 12z" />
                                                         </svg>
-                                                        A senha não pode ter mais de 15 caracteres
+                                                        A senha não pode ter mais de 50 caracteres
                                                     </span>
                                                 )
                                             }
