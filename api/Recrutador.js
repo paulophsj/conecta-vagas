@@ -1,10 +1,9 @@
+import { Fetch } from "@/util/Fetch"
+
 export const createRecrutador = async (recrutador) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/recrutador`, {
+        const response = await Fetch(`http://localhost:8080/api/recrutador`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify(recrutador)
         })
         const data = await response.json()

@@ -1,13 +1,21 @@
+import { Auth } from "@/api/Auth";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const formData = new FormData(e.target);
         const DataObject = Object.fromEntries(formData.entries());
 
+        try {
+            const response = await Auth(DataObject)
+            return toast.success(response)
+        } catch (error) {
+            return toast.error(error)
+        }
     }
     return (
         <div className="flex justify-center p-4 w-full md:w-2xl">
@@ -16,13 +24,13 @@ export default function LoginPage() {
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                        <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
                             Email
                         </label>
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
+                            type="username"
+                            id="username"
+                            name="username"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             placeholder="seu@email.com"
                             required

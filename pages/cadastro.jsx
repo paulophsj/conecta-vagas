@@ -2,11 +2,11 @@ import { createCandidato, createEndereco, createFormacao } from "@/api/Candidato
 import { createRecrutador } from "@/api/Recrutador";
 import Cidades from "@/components/Inputs/Cidades";
 import Estados from "@/components/Inputs/Estados";
-import Toast from "@/components/Toast/Toast";
 import { useLocalidades } from "@/hooks/Localidades";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
+import { toast } from "react-toastify";
 
 export default function candidato() {
     const [formacaoAcademica, setFormacaoAcademica] = useState(0)
@@ -19,7 +19,7 @@ export default function candidato() {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    const [isValidEmail, setIsValidEmail] = useState(false)
+    const [isValidusername, setIsValidusername] = useState(false)
 
     const [toastState, setToastState] = useState({
         message: null,
@@ -46,7 +46,7 @@ export default function candidato() {
         setPasswordsMatch(false)
         setShowPassword(false)
         setShowConfirmPassword(false)
-        setIsValidEmail(false)
+        setIsValidusername(false)
         setToastState({ message: null, isError: null })
         setSelectedEstado(null)
     }, [isCandidato])
@@ -57,7 +57,7 @@ export default function candidato() {
         const data = Object.fromEntries(formData.entries())
 
         if (!isCandidato) {
-            return await salvarRecrutador({ ...data, tipoPerfil: {}, senha: password })
+            return await salvarRecrutador({ ...data, tipoPerfil: {}, password: password })
         }
 
         // Coletando os dados de formação acadêmica
@@ -84,7 +84,7 @@ export default function candidato() {
 
         const todosEnderecos = logradouro.map((logradouro, index) => ({
             enderecoCep: cep[index],
-            enderecoRua: logradouro,
+            enderecoRua: logradouro[index],
             enderecoNumero: numero[index],
             enderecoComplemento: complemento[index],
             enderecoBairro: bairro[index],
@@ -101,7 +101,7 @@ export default function candidato() {
             cargoPretendido: data.cargoPretendido,
             email: data.email,
             pretensaoSalarial: parseFloat(data.pretensaoSalarial?.toString().replace('R$ ', '')),
-            ...(passwordsMatch ? { senha: password } : {}),
+            ...(passwordsMatch ? { password: password } : {}),
         }
         const formacaoAcademica = todosCursos
 
@@ -114,28 +114,27 @@ export default function candidato() {
             const { id: candidato_id } = await createCandidato(informacoesPessoais)
             await createEndereco(candidato_id, endereco)
             await createFormacao(candidato_id, formacaoAcademica)
-            setToastState({ message: "Você foi cadastrado com sucesso! Redirecionando...", isError: false })
+            toast.success("Você foi cadastrado com sucesso!")
         } catch (error) {
-            setToastState({ message: "Erro ao cadastrar. Erro: " + error.message, isError: true })
+            toast.error(error.message)
         }
     }
     const salvarRecrutador = async (recrutadorProfile) => {
         try {
             await createRecrutador(recrutadorProfile)
-            setToastState({ message: "Você foi cadastrado com sucesso! Redirecionando...", isError: false })
+            toast.success("Você foi cadastrado com sucesso!")
         } catch (error) {
-            setToastState({ message: "Erro ao cadastrar. Erro: " + error.message, isError: true })
+            toast.error(error.message)
         }
     }
-    const handleEmail = (e) => {
-        if (e.includes("@") && e.includes(".com")) setIsValidEmail(true)
-        else setIsValidEmail(false)
+    const handleusername = (e) => {
+        if (e.includes("@") && e.includes(".com")) setIsValidusername(true)
+        else setIsValidusername(false)
 
     }
 
     return (
         <>
-            <Toast message={toastState.message} isError={toastState.isError} />
             <div className="flex justify-center p-4">
                 <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl">
                     <h1 className="text-2xl font-bold text-center text-blue-400 mb-8">Cadastro</h1>
@@ -225,10 +224,10 @@ export default function candidato() {
                                             <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                                                 Email
                                             </label>
-                                            <input onChange={(e) => handleEmail(e.target.value)} type="email" id="email" name="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                                            <span className={`text-sm ${isValidEmail ? 'text-green-500' : 'text-red-500'} flex gap-2 mt-2`}>
+                                            <input onChange={(e) => handleusername(e.target.value)} type="email" id="email" name="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                                            <span className={`text-sm ${isValidusername ? 'text-green-500' : 'text-red-500'} flex gap-2 mt-2`}>
                                                 {
-                                                    !isValidEmail ? (
+                                                    !isValidusername ? (
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                                         </svg>
@@ -287,7 +286,7 @@ export default function candidato() {
                                         </div>
                                         <div className="mb-7">
                                             <label htmlFor="confirmar-password" className={`block ${password.length < 6 ? 'text-gray-400' : 'text-gray-700'} text-sm font-bold mb-2`}>
-                                                Confirmar Senha
+                                                Confirmar senha
                                             </label>
                                             <div className="relative">
                                                 <input type={showConfirmPassword ? 'text' : 'password'} minLength={6} maxLength={50} disabled={password.length < 6} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmar-password" autoComplete="new-password" name="confirmar-password" className={`w-full px-3 py-2 border ${password.length < 6 ? 'bg-gray-200 opacity-50' : ''} border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`} />
@@ -405,7 +404,6 @@ export default function candidato() {
                                                                     Complemento
                                                                 </label>
                                                                 <IMaskInput
-                                                                    mask={/^[A-Za-zÀ-ÿ\s]*$/}
                                                                     type="text"
                                                                     id="complemento"
                                                                     name="complemento"
@@ -585,10 +583,11 @@ export default function candidato() {
                                                                     defaultValue=""
                                                                 >
                                                                     <option value={""} disabled>Selecione</option>
-                                                                    <option value="MEDIO">Ensino Médio</option>
+                                                                    <option value="ENSINO_FUNDAMENTAL">Ensino Fundamental</option>
+                                                                    <option value="ENSINO_MEDIO">Ensino Médio</option>
                                                                     <option value="TECNICO">Técnico</option>
                                                                     <option value="TECNOLOGO">Tecnólogo</option>
-                                                                    <option value="GRADUACAO">Graduação</option>
+                                                                    <option value="SUPERIOR">Superior</option>
                                                                     <option value="POS_GRADUACAO">Pós-Graduação</option>
                                                                     <option value="MESTRADO">Mestrado</option>
                                                                     <option value="DOUTORADO">Doutorado</option>
@@ -717,14 +716,14 @@ export default function candidato() {
 
                         <button
                             type="submit"
-                            className={`w-full lg:w-1/2 mx-auto block cursor-pointer ${passwordsMatch && isValidEmail ? 'bg-blue-400' : 'bg-gray-300 pointer-events-none'} text-white py-2 px-4 rounded-md hover:bg-blue-500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50`}
-                            disabled={!passwordsMatch || !isValidEmail}
+                            className={`w-full lg:w-1/2 mx-auto block cursor-pointer ${passwordsMatch && isValidusername ? 'bg-blue-400' : 'bg-gray-300 pointer-events-none'} text-white py-2 px-4 rounded-md hover:bg-blue-500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50`}
+                            disabled={!passwordsMatch || !isValidusername}
                         >
                             {
-                                passwordsMatch && isValidEmail
+                                passwordsMatch && isValidusername
                                     ? 'Enviar Cadastro'
                                     : !passwordsMatch ? 'As senhas não coincidem'
-                                        : !isValidEmail ? "O email precisa ser válido"
+                                        : !isValidusername ? "O username precisa ser válido"
                                             : "Algo deu errado."
                             }
                         </button>
