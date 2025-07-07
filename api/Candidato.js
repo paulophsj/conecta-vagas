@@ -22,10 +22,10 @@ export const createCandidato = async (candidato) => {
         throw error
     }
 }
-export const createEndereco = async (candidato_id, endereco) => {
+export const createEndereco = async (endereco) => {
     for (const umEndereco of endereco) {
         try {
-            const response = await Fetch(`http://localhost:8080/api/candidato/endereco/${candidato_id}`, {
+            const response = await Fetch(`http://localhost:8080/api/candidato/endereco`, {
                 method: "POST",
                 body: JSON.stringify(umEndereco)
             })
@@ -41,10 +41,10 @@ export const createEndereco = async (candidato_id, endereco) => {
     }
 }
 
-export const createFormacao = async (candidato_id, formacao) => {
+export const createFormacao = async (formacao) => {
     for (const umaFormacao of formacao) {
         try {
-            const response = await Fetch(`http://localhost:8080/api/candidato/formacao/${candidato_id}`, {
+            const response = await Fetch(`http://localhost:8080/api/candidato/formacao`, {
                 method: "POST",
                 body: JSON.stringify(umaFormacao)
             })

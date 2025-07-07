@@ -1,4 +1,4 @@
-import { useLocalidades } from "@/hooks/Localidades"
+import { useLocalidades } from "@/hooks/useLocalidades"
 
 export default function Estados({handleChange}) {
     const {estados} = useLocalidades()

@@ -1,4 +1,4 @@
-import { useLocalidades } from "@/hooks/Localidades"
+import { useLocalidades } from "@/hooks/useLocalidades"
 import { useEffect, useState } from "react"
 
 export default function Cidades({ byEstado }) {

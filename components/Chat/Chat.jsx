@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Chat({children}) {
+export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeProfile, setActiveProfile] = useState(null);
   const [message, setMessage] = useState('');
@@ -225,9 +225,6 @@ export default function Chat({children}) {
         )}
       </button>
     </div>
-    {
-        children
-    }
     </>
   );
 }

@@ -2,13 +2,17 @@ import { createCandidato, createEndereco, createFormacao } from "@/api/Candidato
 import { createRecrutador } from "@/api/Recrutador";
 import Cidades from "@/components/Inputs/Cidades";
 import Estados from "@/components/Inputs/Estados";
-import { useLocalidades } from "@/hooks/Localidades";
+import Spinner from "@/components/Spinner";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
 import { toast } from "react-toastify";
 
 export default function candidato() {
+    const router = useRouter()
+    const [loading, setLoading] = useState(true)
+
     const [formacaoAcademica, setFormacaoAcademica] = useState(0)
     const [enderecos, setEnderecos] = useState(0)
     const [isCandidato, setIsCandidato] = useState(true)
@@ -21,12 +25,16 @@ export default function candidato() {
 
     const [isValidusername, setIsValidusername] = useState(false)
 
-    const [toastState, setToastState] = useState({
-        message: null,
-        isError: null,
-    })
-
     const [selectedEstado, setSelectedEstado] = useState(null)
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        if(token){
+            router.replace("/")
+        } else {
+            setLoading(false)
+        }
+    }, [router])
 
     useEffect(() => {
         if (password === '' || confirmPassword === '') {
@@ -37,7 +45,11 @@ export default function candidato() {
     }, [confirmPassword, password])
 
     useEffect(() => {
-        document.getElementById('form').reset()
+        const form = document.getElementById('form')
+
+        if(form){
+            form.reset()
+        }
 
         setFormacaoAcademica(0)
         setEnderecos(0)
@@ -47,7 +59,6 @@ export default function candidato() {
         setShowPassword(false)
         setShowConfirmPassword(false)
         setIsValidusername(false)
-        setToastState({ message: null, isError: null })
         setSelectedEstado(null)
     }, [isCandidato])
 
@@ -111,9 +122,9 @@ export default function candidato() {
     }
     const salvarCandidato = async (informacoesPessoais, endereco, formacaoAcademica) => {
         try {
-            const { id: candidato_id } = await createCandidato(informacoesPessoais)
-            await createEndereco(candidato_id, endereco)
-            await createFormacao(candidato_id, formacaoAcademica)
+            await createCandidato(informacoesPessoais)
+            await createEndereco(endereco)
+            await createFormacao(formacaoAcademica)
             toast.success("Você foi cadastrado com sucesso!")
         } catch (error) {
             toast.error(error.message)
@@ -133,6 +144,10 @@ export default function candidato() {
 
     }
 
+    if(loading){
+        return <Spinner />
+    }
+
     return (
         <>
             <div className="flex justify-center p-4">
@@ -142,7 +157,7 @@ export default function candidato() {
                     <form id="form" className="space-y-8" onSubmit={formSubmitHandler} autoComplete="off">
                         <div className="">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Tipo de perfil</h2>
-                            <select name="tipoPerfil" onChange={(e) => setIsCandidato(Boolean(Number(e.target.value)))} defaultValue={isCandidato} className=" w-full lg:w-auto px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <select name="tipoPerfil" onChange={(e) => setIsCandidato(e.target.value === "1")} value={isCandidato ? "1" : "0"}  className=" w-full lg:w-auto px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option value="" disabled>Selecione uma opção</option>
                                 <option value={1}>Candidato</option>
                                 <option value={0}>Recrutador</option>

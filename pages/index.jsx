@@ -1,6 +1,6 @@
 import ListCard from "@/components/Cards/ListCard";
 import ListComments from "@/components/Comments/ListComments";
-import { useLocalidades } from "@/hooks/Localidades";
+import { useLocalidades } from "@/hooks/useLocalidades";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 

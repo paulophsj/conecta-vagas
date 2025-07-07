@@ -1,8 +1,10 @@
 import { Auth } from "@/api/Auth";
+import { useUser } from "@/components/UserContext";
 import Link from "next/link";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
+    const {fetchUser} = useUser()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -12,6 +14,7 @@ export default function LoginPage() {
 
         try {
             const response = await Auth(DataObject)
+            await fetchUser()
             return toast.success(response)
         } catch (error) {
             return toast.error(error)
