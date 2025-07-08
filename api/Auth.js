@@ -21,3 +21,19 @@ export const Auth = async (user) => {
         throw error.message
     }
 }
+export const checkUser = async () => {
+    const type = localStorage.getItem("type")
+    try {
+        const response = await Fetch(`http://localhost:8080/api/${type}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao carregar dados do usuário');
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw err.message
+    }
+}
