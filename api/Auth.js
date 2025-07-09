@@ -2,16 +2,19 @@ import { Fetch } from "@/util/Fetch"
 
 export const Auth = async (user) => {
     try {
-        const response = await Fetch("http://localhost:8080/api/auth", {
+        const response = await fetch("http://localhost:8080/api/auth", {
+            headers: {
+                "Content-Type": "application/json"
+            },
             method: "POST",
             body: JSON.stringify(user)
         })
-        const data = await response.json()
-
+        
         if (!response.ok) {
-            throw new Error(data?.message || "Credenciais inválidas")
+            throw new Error("Credenciais inválidas")
         }
-
+        
+        const data = await response.json()
         localStorage.setItem("token", data.token)
         localStorage.setItem("type", String(data.type).toLowerCase())
 

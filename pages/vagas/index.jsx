@@ -1,4 +1,5 @@
 import ListCard from "@/components/Cards/ListCard";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 
 export default function vaga_index() {
@@ -15,6 +16,10 @@ export default function vaga_index() {
 
     return (
         <>
+            <Head>
+                <title>Lista de vagas</title>
+                <meta name="description" content="Tela listagem de vagas" />
+            </Head>
             <span onClick={() => setOpenModal(false)} className={`${openModal ? "opacity-50 pointer-events-all" : "opacity-0 pointer-events-none"} fixed z-50 w-full h-full top-0 left-0 bg-gray-900 transition-all duration-200`}></span>
 
             {/* Botão para abrir filtros em mobile */}

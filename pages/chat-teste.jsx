@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
-export default function ChatTeste() {
+export default function ChatTestePage() {
     const [mensagens, setMensagens] = useState([]);
     const [conteudo, setConteudo] = useState("");
     const [idChat, setIdChat] = useState("1"); // você pode mudar para um ID real

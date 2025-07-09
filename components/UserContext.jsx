@@ -1,4 +1,4 @@
-import { Fetch } from '@/util/Fetch';
+import { checkUser } from '@/api/Auth';
 import { createContext, useState, useContext, useEffect } from 'react';
 
 const UserContext = createContext();
@@ -8,11 +8,7 @@ export function UserProvider({ children }) {
 
     const fetchUser = async () => {
         try {
-            const type = localStorage.getItem("type");
-            const response = await Fetch(`http://localhost:8080/api/${type}`, {
-                method: "GET"
-            });
-            const data = await response.json();
+            const data = await checkUser()
             setUser(data);
         } catch (error) {
             setUser(null);

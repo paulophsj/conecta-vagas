@@ -1,24 +1,16 @@
 import ListCard from "@/components/Cards/ListCard";
 import ListComments from "@/components/Comments/ListComments";
 import { useLocalidades } from "@/hooks/useLocalidades";
+import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export default function index() {
+export default function Index() {
   const { estados, municipios } = useLocalidades();
   const [isMounted, setIsMounted] = useState(false);
   const [valoresBuscados, setValoresBuscados] = useState(null);
   const [inputEstado, setInputEstado] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -52,19 +44,21 @@ export default function index() {
 
   return (
     <>
+      <Head>
+        <title>Home</title>
+        <meta name="description" content="Tela inicial" />
+      </Head>
       {/* Hero Section */}
       <section
-        className={`relative transition-all duration-500 w-full ${
-          isScrolled ? "pt-24" : "pt-32"
-        } pb-20`}
+        className={`relative transition-all duration-500 w-full ${"pt-24"
+          }`}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-blue-400/5 dark:from-blue-900/10 dark:to-blue-900/5 -z-10"></div>
         <div
-          className={`container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-10 transition-all duration-700 ease-out ${
-            isMounted
+          className={`container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-10 transition-all duration-700 ease-out ${isMounted
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-10"
-          }`}
+            }`}
         >
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl max-lg:text-4xl text-blue-400 dark:text-white font-bold mb-6">
@@ -136,7 +130,7 @@ export default function index() {
                           onClick={() => {
                             setInputEstado(
                               localidade.nome +
-                                (localidade?.uf ? `, ${localidade.uf}` : "")
+                              (localidade?.uf ? `, ${localidade.uf}` : "")
                             );
                             setValoresBuscados(null);
                           }}
@@ -186,27 +180,6 @@ export default function index() {
                 <span>Buscar</span>
               </button>
             </div>
-
-            <div className="mt-4 flex justify-center">
-              <Link
-                href="/vagas"
-                className="text-blue-500 dark:text-blue-300 hover:text-blue-600 dark:hover:text-blue-200 font-medium flex items-center gap-2 transition-colors duration-200"
-              >
-                <span>Ver todas as vagas disponíveis</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
-                  />
-                </svg>
-              </Link>
-            </div>
           </form>
         </div>
       </section>
@@ -219,7 +192,7 @@ export default function index() {
             <span className="text-blue-500 dark:text-blue-300">destaque</span>
           </h2>
           <Link
-            href="/vagas"
+            href={{ pathname: "/vagas" }}
             className="flex items-center gap-2 text-blue-500 dark:text-blue-300 hover:text-blue-600 dark:hover:text-blue-200 font-medium transition-colors duration-200"
           >
             Ver todas as vagas
@@ -237,11 +210,11 @@ export default function index() {
             </svg>
           </Link>
         </div>
-        <ListCard quantidade={4} />
+        <ListCard quantidade={3} />
       </section>
 
       {/* How It Works */}
-      <section className="dark:bg-gray-800 py-16">
+      <section className="dark:bg-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-blue-400 dark:text-white mb-4">
             Como{" "}
@@ -313,25 +286,22 @@ export default function index() {
               ].map((step, index) => (
                 <div
                   key={index}
-                  className={`flex flex-col items-center text-center p-6 rounded-xl transition-all duration-200 ${
-                    activeStep === index
+                  className={`flex flex-col items-center text-center p-6 rounded-xl transition-all duration-200 ${activeStep === index
                       ? "transform scale-105 bg-white dark:bg-gray-700 shadow-lg"
                       : "bg-blue-100/50 dark:bg-gray-700/50"
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`mb-4 transition-colors duration-200 ${
-                      activeStep === index ? "text-blue-500" : "text-blue-400"
-                    }`}
+                    className={`mb-4 transition-colors duration-200 ${activeStep === index ? "text-blue-500" : "text-blue-400"
+                      }`}
                   >
                     {step.icon}
                   </div>
                   <h3
-                    className={`text-xl font-bold mb-2 ${
-                      activeStep === index
+                    className={`text-xl font-bold mb-2 ${activeStep === index
                         ? "text-blue-500 dark:text-blue-300"
                         : "text-blue-400 dark:text-white"
-                    }`}
+                      }`}
                   >
                     {step.title}
                   </h3>
@@ -369,7 +339,7 @@ export default function index() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              href="/cadastro"
+              href={{ pathname: "/cadastro" }}
               className="px-8 py-3 bg-white text-blue-500 font-medium rounded-lg hover:bg-blue-50 transition-all duration-200 shadow-lg hover:shadow-blue-200/50 flex items-center justify-center gap-2"
             >
               <svg
@@ -384,7 +354,7 @@ export default function index() {
               Criar conta gratuita
             </Link>
             <Link
-              href="/vagas"
+              href={{ pathname: "/vagas" }}
               className="px-8 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors duration-200 flex items-center justify-center gap-2"
             >
               <svg

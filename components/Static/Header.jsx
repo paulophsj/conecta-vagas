@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSideBar } from "./SideBar/SideBarProvider"
 import SideBar from "./SideBar/SideBar"
 import { useUser } from "../UserContext"
@@ -7,15 +7,22 @@ import { useUser } from "../UserContext"
 export default function Header() {
     const { isOpen, setIsOpen } = useSideBar()
     const { user } = useUser()
+    const [type, setType] = useState(null)
 
     useEffect(() => {
+        const hasType = localStorage.getItem("type")
+
+        if(hasType){
+            setType(hasType)
+        }
+
         if (isOpen) {
             document.body.style.overflow = "hidden"
         }
         else {
             document.body.style.overflow = "auto"
         }
-    }, [isOpen])
+    }, [isOpen, user])
 
     return (
         <nav className="bg-white sticky top-0 border-gray-200 dark:bg-gray-900 shadow-2xl z-50">
@@ -42,7 +49,7 @@ export default function Header() {
                             <Link href={{ pathname: "/vagas" }} onClick={() => setIsOpen(false)} className="block py-2 px-3 font-bold text-blue-400 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-500 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Vagas</Link>
                         </li>
                         <li>
-                            <Link href={{ pathname: user ? "/dashboard" : "/login" }} onClick={() => setIsOpen(false)} className="block px-8 font-bold text-white bg-blue-400 rounded-sm hover:bg-blue-500 md:hover:bg-blue-500 md:border-0 md:hover:text-white md:px-4 md:py-1 dark:text-white md:dark:hover:text-white dark:hover:bg-blue-500 dark:hover:text-white md:dark:hover:bg-blue-500">{user ? user.nome.split(' ')[0] : "Login"}</Link>
+                            <Link href={{ pathname: user ? "/dashboard" : "/login" }} onClick={() => setIsOpen(false)} className="block px-8 font-bold text-white bg-blue-400 rounded-sm hover:bg-blue-500 md:hover:bg-blue-500 md:border-0 md:hover:text-white md:px-4 md:py-1 dark:text-white md:dark:hover:text-white dark:hover:bg-blue-500 dark:hover:text-white md:dark:hover:bg-blue-500">{user ? type == "candidato" ? "Área do candidato" : "Área do recrutador" : "Login"}</Link>
                         </li>
                     </ul>
                 </div>

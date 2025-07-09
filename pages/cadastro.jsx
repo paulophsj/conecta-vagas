@@ -2,17 +2,14 @@ import { createCandidato, createEndereco, createFormacao } from "@/api/Candidato
 import { createRecrutador } from "@/api/Recrutador";
 import Cidades from "@/components/Inputs/Cidades";
 import Estados from "@/components/Inputs/Estados";
-import Spinner from "@/components/Spinner";
+import ProtectedRouterCaseToken from "@/components/Router/ProtectedRouterCaseToken";
+import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
 import { toast } from "react-toastify";
 
-export default function candidato() {
-    const router = useRouter()
-    const [loading, setLoading] = useState(true)
-
+export default function CadastroPage() {
     const [formacaoAcademica, setFormacaoAcademica] = useState(0)
     const [enderecos, setEnderecos] = useState(0)
     const [isCandidato, setIsCandidato] = useState(true)
@@ -28,15 +25,6 @@ export default function candidato() {
     const [selectedEstado, setSelectedEstado] = useState(null)
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if(token){
-            router.replace("/")
-        } else {
-            setLoading(false)
-        }
-    }, [router])
-
-    useEffect(() => {
         if (password === '' || confirmPassword === '') {
             setPasswordsMatch(false)
             return
@@ -47,7 +35,7 @@ export default function candidato() {
     useEffect(() => {
         const form = document.getElementById('form')
 
-        if(form){
+        if (form) {
             form.reset()
         }
 
@@ -144,12 +132,12 @@ export default function candidato() {
 
     }
 
-    if(loading){
-        return <Spinner />
-    }
-
     return (
-        <>
+        <ProtectedRouterCaseToken>
+            <Head>
+                <title>Cadastro</title>
+                <meta name="description" content="Tela de cadastro" />
+            </Head>
             <div className="flex justify-center p-4">
                 <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl">
                     <h1 className="text-2xl font-bold text-center text-blue-400 mb-8">Cadastro</h1>
@@ -157,7 +145,7 @@ export default function candidato() {
                     <form id="form" className="space-y-8" onSubmit={formSubmitHandler} autoComplete="off">
                         <div className="">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Tipo de perfil</h2>
-                            <select name="tipoPerfil" onChange={(e) => setIsCandidato(e.target.value === "1")} value={isCandidato ? "1" : "0"}  className=" w-full lg:w-auto px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <select name="tipoPerfil" onChange={(e) => setIsCandidato(e.target.value === "1")} value={isCandidato ? "1" : "0"} className=" w-full lg:w-auto px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option value="" disabled>Selecione uma opção</option>
                                 <option value={1}>Candidato</option>
                                 <option value={0}>Recrutador</option>
@@ -754,6 +742,6 @@ export default function candidato() {
                     </div>
                 </div>
             </div>
-        </>
+        </ProtectedRouterCaseToken>
     );
 }
