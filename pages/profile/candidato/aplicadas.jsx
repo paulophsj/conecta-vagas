@@ -17,7 +17,7 @@ export default function VagasAplicadasPage() {
                 const response = await checkAllCandidaturas();
                 setCandidaturas(response || []);
             } catch (error) {
-                toast.error(error.message || "Erro ao carregar candidaturas");
+                toast.error(error.message || "Erro ao carregar candidaturas", { position: "top-center", pauseOnHover: false, autoClose: 1500 });
             } finally {
                 setLoading(false);
             }
@@ -41,36 +41,13 @@ export default function VagasAplicadasPage() {
         });
     };
 
-    if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-blue-50">
-                <Spinner />
-            </div>
-        );
-    }
-
-    if (!candidaturas || candidaturas.length === 0) {
-        return (
-            <div className="min-h-screen bg-blue-50 flex flex-col items-center justify-center p-4">
-                <div className="max-w-md text-center">
-                    <h1 className="text-2xl font-bold text-blue-500 mb-4">Nenhuma candidatura encontrada</h1>
-                    <p className="text-blue-800 mb-6">Você ainda não se candidatou a nenhuma vaga.</p>
-                    <button
-                        onClick={() => router.push('/vagas')}
-                        className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-300"
-                    >
-                        Ver Vagas Disponíveis
-                    </button>
-                </div>
-            </div>
-        );
-    }
+    if (loading) return <Spinner />
 
     return (
-        <ProtectedRouter>
+        <ProtectedRouter byCandidato={true}>
         <>
             <Head>
-                <title>Minhas Candidaturas | Nome da Empresa</title>
+                <title>| Minhas Candidaturas |</title>
                 <meta name="description" content="Lista de vagas para as quais você se candidatou" />
             </Head>
 
@@ -108,7 +85,10 @@ export default function VagasAplicadasPage() {
                                     {/* Cabeçalho */}
                                     <header className="p-6 border-b border-blue-100 bg-blue-500">
                                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                            <span>
                                             <h2 className="text-xl font-bold text-white">{vaga.titulo}</h2>
+                                            <i className="text-white">{vaga.nomeEmpresa}</i>
+                                            </span>
                                             <div className="flex flex-wrap gap-2">
                                                 <span className={`px-3 py-1 text-sm rounded-full ${vaga.ativa ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                                                     {vaga.ativa ? 'Ativa' : 'Inativa'}

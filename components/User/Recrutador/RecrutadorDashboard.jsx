@@ -2,10 +2,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Spinner from "@/components/Spinner";
 import { useUser } from "@/components/UserContext";
+import { findAllVagasByRecrutador } from "@/api/Vagas";
+import { toast } from "react-toastify";
 
 export default function RecrutadorDashboard() {
     const { user } = useUser();
     const [loading, setLoading] = useState(true);
+    const [recruiterVagas, setRecruiterVagas] = useState([])
 
     useEffect(() => {
         if (user) {
@@ -14,6 +17,19 @@ export default function RecrutadorDashboard() {
             setLoading(true);
         }
     }, [user]);
+
+    useEffect(() => {
+        const fetchVagas = async () => {
+            try {
+                const data = await findAllVagasByRecrutador()
+                setRecruiterVagas(data)
+                return
+            } catch (error) {
+                toast.error(error, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
+            }
+        }
+        fetchVagas()
+    }, [user])
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -115,17 +131,21 @@ export default function RecrutadorDashboard() {
                     <div className="bg-blue-500 dark:bg-blue-700 px-6 py-4 flex justify-between items-center">
                         <h3 className="text-lg font-semibold text-white">Vagas Publicadas</h3>
                         <span className="bg-white text-blue-500 px-3 py-1 rounded-full text-sm font-medium">
-                            {user.vagas.length} vagas
+                            {recruiterVagas.length} vagas
                         </span>
                     </div>
                     <div className="p-6">
-                        {user.vagas.length > 0 ? (
+                        {recruiterVagas.length > 0 ? (
                             <div className="space-y-6">
-                                {user.vagas.map((vaga) => (
+                                {recruiterVagas.map((vaga) => (
                                     <div key={vaga.id} className="border border-blue-100 dark:border-gray-700 rounded-lg p-5 hover:bg-blue-50/50 dark:hover:bg-gray-700/50 transition-colors">
                                         <div className="flex justify-between items-start">
                                             <div>
-                                                <h4 className="font-bold text-lg text-blue-700 dark:text-white mb-1">{vaga.titulo}</h4>
+                                                <div className="md:flex items-center">
+                                                    <h4 className="font-bold text-lg text-blue-700 dark:text-white">{vaga.titulo}</h4>
+                                                    <span className="hidden md:block px-2 text-blue-700">|</span>
+                                                    <h4 className="mb-1 italic text-blue-700 md:mb-0">{vaga.nomeEmpresa}</h4>
+                                                </div>
                                                 <p className="text-blue-600 dark:text-blue-300 mb-3">{vaga.localizacao}</p>
                                                 <div className="flex flex-wrap gap-2 mb-3">
                                                     <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-xs">
@@ -168,7 +188,7 @@ export default function RecrutadorDashboard() {
                                                 Editar
                                             </Link>
                                             <Link
-                                                href={`/vagas/${vaga.id}/candidatos`}
+                                                href={{pathname: "/profile/recrutador/candidaturas/[id]", query: {id: vaga.id}}}
                                                 className="px-4 py-2 bg-white dark:bg-gray-700 border border-blue-500 text-blue-500 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-600 text-sm font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -202,7 +222,7 @@ export default function RecrutadorDashboard() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-blue-500 dark:text-blue-400">Total de Vagas</p>
-                                <p className="text-3xl font-bold text-blue-600 dark:text-blue-300">{user.vagas.length}</p>
+                                <p className="text-3xl font-bold text-blue-600 dark:text-blue-300">{recruiterVagas.length}</p>
                             </div>
                             <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -217,7 +237,7 @@ export default function RecrutadorDashboard() {
                             <div>
                                 <p className="text-sm text-blue-500 dark:text-blue-400">Vagas Ativas</p>
                                 <p className="text-3xl font-bold text-blue-600 dark:text-blue-300">
-                                    {user.vagas.filter(v => v.ativa).length}
+                                    {recruiterVagas.filter(v => v.ativa).length}
                                 </p>
                             </div>
                             <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
@@ -232,9 +252,9 @@ export default function RecrutadorDashboard() {
                             <div>
                                 <p className="text-sm text-blue-500 dark:text-blue-400">Média Salarial</p>
                                 <p className="text-3xl font-bold text-blue-600 dark:text-blue-300">
-                                    {user.vagas.length > 0
+                                    {recruiterVagas.length > 0
                                         ?
-                                        (user.vagas.reduce((prev, curr) => prev + curr.salario, 0) / user.vagas.length).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                                        (recruiterVagas.reduce((prev, curr) => prev + curr.salario, 0) / recruiterVagas.length).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
                                         : 'R$ 0,00'
                                     }
                                 </p>
@@ -264,22 +284,13 @@ export default function RecrutadorDashboard() {
                         Editar Perfil
                     </Link>
                     <Link
-                        href="/vagas/nova"
+                        href="/profile/recrutador/vagas/create"
                         className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                         </svg>
                         Nova Vaga
-                    </Link>
-                    <Link
-                        href="/candidatos"
-                        className="px-6 py-3 bg-white dark:bg-gray-700 border border-blue-500 text-blue-500 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-600 font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275z" />
-                        </svg>
-                        Buscar Candidatos
                     </Link>
                 </div>
             </section>

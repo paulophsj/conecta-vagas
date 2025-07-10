@@ -186,7 +186,7 @@ export default function CandidatoDashboard() {
               Editar Perfil
             </Link>
             <Link 
-              href={{pathname: "/vagas/aplicadas"}}
+              href={{pathname: "/profile/candidato/aplicadas"}}
               className="px-6 py-3 bg-white dark:bg-gray-700 border border-blue-500 text-blue-500 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-600 font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

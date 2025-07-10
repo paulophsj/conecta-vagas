@@ -1,8 +1,21 @@
 import Link from "next/link"
 import { useSideBar } from "./SideBarProvider"
+import { useUser } from "@/components/UserContext"
+import { useEffect, useState } from "react"
 
 export default function SideBar() {
+    const {user} = useUser()
     let { isOpen, setIsOpen } = useSideBar()
+    const [type, setType] = useState(null)
+
+        useEffect(() => {
+            const hasType = localStorage.getItem("type")
+    
+            if(hasType){
+                setType(hasType)
+            }
+
+        }, [user])
     return (
         <>
             <span onClick={() => setIsOpen(false)} className={`${isOpen ? "opacity-50 pointer-events-all" : "opacity-0 pointer-events-none"} fixed z-50 w-full h-full top-0 left-0 bg-gray-900 transition-all duration-200`}></span>
@@ -34,11 +47,11 @@ export default function SideBar() {
                             </Link>
                         </li>
                         <li>
-                            <Link href={{ pathname: "/login" }} onClick={() => setIsOpen(false)} className="flex items-center p-2 text-blue-400 font-bold hover:text-white rounded-lg bg-blue-400 dark:text-white hover:bg-blue-500 dark:hover:bg-gray-700 group">
+                            <Link href={{ pathname: user ? "/profile" : "/login" }} onClick={() => setIsOpen(false)} className="flex items-center p-2 text-blue-400 font-bold hover:text-white rounded-lg bg-blue-400 dark:text-white hover:bg-blue-500 dark:hover:bg-gray-700 group">
                                 <svg className="shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>
                                 </svg>
-                                <span className="flex-1 ms-3 whitespace-nowrap text-white ">Login</span>
+                                <span className="flex-1 ms-3 whitespace-nowrap text-white ">{user ? type == "candidato" ? "Área do candidato" : "Área do recrutador" : "Login"}</span>
                             </Link>
                         </li>
                     </ul>

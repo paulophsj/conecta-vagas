@@ -8,7 +8,9 @@ export default function ProtectedRouterCaseToken({ children }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
-    if (token) router.replace('/login')
+    if (token) {
+      return router.replace('/login')
+    }
     setLoading(false)
   }, [])
 

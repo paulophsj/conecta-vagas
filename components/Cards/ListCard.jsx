@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { findAllVagas } from "@/api/Vagas";
 import Spinner from "../Spinner";
 
-export default function ListCard({ quantidade }) {
+export default function ListCard({ quantidade, setIsLoading = () => {}}) {
     const [cards, setCards] = useState(null);
     const { pathname } = useRouter()
 
@@ -12,9 +12,10 @@ export default function ListCard({ quantidade }) {
         const fetchCards = async () => {
             const response = await findAllVagas()
             setCards(response.map((vagaEmprego) => <Card key={vagaEmprego.id} vagaEmprego={vagaEmprego} />).slice(0, quantidade));
+            setIsLoading(false)
         };
         fetchCards();
-    }, [])
+    }, [quantidade, setIsLoading])
 
     if(cards === null){
         return <Spinner />

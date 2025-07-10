@@ -5,6 +5,7 @@ import { findOneVaga } from "@/api/Vagas";
 import Spinner from "@/components/Spinner";
 import { enviarCandidatura } from "@/api/Candidatura";
 import { toast } from "react-toastify";
+import ProtectedRouter from "@/components/Router/ProtectedRouter";
 
 export default function VagaDetalhes() {
     const router = useRouter();
@@ -31,9 +32,9 @@ export default function VagaDetalhes() {
     const enviarCurriculo = async () => {
         try {
             const response = await enviarCandidatura(id)
-            return toast.success(response, {position: 'top-center'})
+            return toast.success(response, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
         } catch (error) {
-            return toast.error(error, {position: 'top-center'})
+            return toast.error(error, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
         }
     }
 
@@ -61,23 +62,25 @@ export default function VagaDetalhes() {
 
     if (!vaga) {
         return (
-            <div className="dark:bg-gray-900 flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vaga não encontrada</h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">A vaga solicitada não existe ou foi removida.</p>
-                    <button
-                        onClick={() => router.back()}
-                        className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors duration-300"
-                    >
-                        Voltar
-                    </button>
+            <ProtectedRouter byCandidato={true}>
+                <div className="dark:bg-gray-900 flex items-center justify-center">
+                    <div className="text-center">
+                        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vaga não encontrada</h1>
+                        <p className="text-gray-600 dark:text-gray-400 mt-2">A vaga solicitada não existe ou foi removida.</p>
+                        <button
+                            onClick={() => router.back()}
+                            className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors duration-300"
+                        >
+                            Voltar
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </ProtectedRouter>
         );
     }
 
     return (
-        <>
+        <ProtectedRouter byCandidato={true}>
             <Head>
                 <title>{vaga.titulo} | Nome da Empresa</title>
                 <meta name="description" content={`Detalhes da vaga para ${vaga.titulo}`} />
@@ -218,6 +221,6 @@ export default function VagaDetalhes() {
                     </article>
                 </div>
             </div>
-        </>
+        </ProtectedRouter>
     );
 }

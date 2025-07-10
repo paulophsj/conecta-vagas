@@ -4,7 +4,7 @@ import RecrutadorDashboard from "@/components/User/Recrutador/RecrutadorDashboar
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-export default function DashBoardPage() {
+export default function ProfileIndexPage() {
   const [type, setType] = useState(null)
 
   useEffect(() => {
@@ -12,12 +12,8 @@ export default function DashBoardPage() {
     setType(typeUser)
   }, [])
 
-  if (!type) {
-    return <p>Você não está autenticado</p>
-  }
-
   return (
-    <ProtectedRouter>
+    <ProtectedRouter byCandidato={true} byRecrutador={true}>
       <Head>
         <title>Profile Page</title>
         <meta name="description" content="Tela de uusário" />

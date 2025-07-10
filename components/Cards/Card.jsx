@@ -14,7 +14,8 @@ export default function Card({ vagaEmprego }) {
         cargaHoraria,
         ativa,
         requisitos,
-        formato
+        formato,
+        nomeEmpresa
     } = vagaEmprego;
 
     // Função para formatar a data
@@ -47,7 +48,11 @@ export default function Card({ vagaEmprego }) {
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold text-white">{titulo}</h2>
+                                    <div className="lg:flex lg:items-center">
+                                        <h2 className="text-xl font-bold text-white">{titulo}</h2>
+                                        <span className="hidden lg:block px-2 font-bold text-white">|</span>
+                                        <h2 className="font-thin italic lg:text-xl text-white lg:font-bold ">{nomeEmpresa}</h2>
+                                    </div>
                                     <div className="flex items-center gap-2 mt-1">
                                         <span className={`px-2 py-1 text-xs rounded-full ${ativa ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                                             {ativa ? 'Vaga Ativa' : 'Vaga Inativa'}
@@ -126,6 +131,7 @@ export default function Card({ vagaEmprego }) {
                                 </div>
                                 <div>
                                     <h2 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2">{titulo}</h2>
+                                    <i className="text-sm text-blue-600">{nomeEmpresa}</i>
                                     <div className="flex items-center gap-2 mt-1">
                                         <span className={`px-2 py-0.5 text-xs rounded-full ${ativa ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                                             {ativa ? 'Ativa' : 'Inativa'}
