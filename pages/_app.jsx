@@ -13,10 +13,11 @@ export default function MyApp({ Component, pageProps }) {
             <SideBarProvider>
                 <Header />
                 <ToastContainer/>
-                <Chat/>
-                    <main className='grow bg-gray-100 flex flex-col items-center justify-center'>
-                        <Component {...pageProps} />
-                    </main>
+                    <Chat>
+                        <main className='grow bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center'>
+                            <Component {...pageProps} />
+                        </main>
+                    </Chat>
                 <Footer />
             </SideBarProvider>
         </UserProvider>

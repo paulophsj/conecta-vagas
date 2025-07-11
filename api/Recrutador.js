@@ -2,7 +2,7 @@ import { Fetch } from "@/util/Fetch"
 
 export const createRecrutador = async (recrutador) => {
     try {
-        const response = await Fetch(`http://localhost:8080/api/recrutador`, {
+        const response = await Fetch(`http://10.195.107.67:8080/api/recrutador`, {
             method: "POST",
             body: JSON.stringify(recrutador)
         })

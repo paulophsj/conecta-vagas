@@ -37,7 +37,7 @@ export default function VagaIndexPage() {
             <section className="container p-5 mx-auto flex flex-col md:flex-row gap-5 items-start">
             
             {
-                isLoading ? <Spinner /> :
+                isLoading &&
                     <div className={`bg-white w-11/12 md:w-1/4 p-4 shadow-md rounded-sm max-md:fixed h-fit top-1/2 left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:-translate-y-1/2 ${openModal ? "fixed inset-0 z-50 overflow-y-auto" : "hidden md:block"}`}>
                         <div className="flex flex-col h-full">
                             <div className="mb-2">
@@ -112,7 +112,6 @@ export default function VagaIndexPage() {
                             </footer>
                         </div>
                     </div>
-
             }
 
                 <div className="w-full md:w-3/4">

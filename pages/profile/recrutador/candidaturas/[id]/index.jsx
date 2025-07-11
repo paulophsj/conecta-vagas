@@ -1,17 +1,19 @@
 import { checkAllCandidaturasByIdVaga } from '@/api/Candidatura';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Spinner from '@/components/Spinner';
 import ProtectedRouter from '@/components/Router/ProtectedRouter';
 import { toast } from 'react-toastify';
 import { useUser } from '@/components/UserContext';
 import { createChat } from '@/api/Chat';
+import { chatContext } from '@/components/Chat/Chat';
 
 const CandidaturasPage = () => {
     const router = useRouter();
     const { id } = router.query;
-    const {user} = useUser()
+
+    const {fetchChats, setIsOpen} = useContext(chatContext)
 
     const [candidaturas, setCandidaturas] = useState([]);
     const [filtro, setFiltro] = useState('');
@@ -64,6 +66,8 @@ const CandidaturasPage = () => {
     const criarChat = async (idCandidato) => {
         try {
             const response = await createChat(idCandidato)
+            await fetchChats()
+            setIsOpen(true)
             toast.success('Chat criado com sucesso!', { position: "top-center", pauseOnHover: false, autoClose: 1500 });
             return response;
         } catch (error) {
@@ -229,7 +233,7 @@ const CandidaturasPage = () => {
                                                 </div>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">{candidatura.candidato.nome}</h3>
-                                                    <p className="text-gray-600 dark:text-gray-400 truncate">{candidatura.candidato.cargoPretendido}</p>
+                                                    <p className="text-gray-600 dark:text-gray-400 truncate">Cargo pretendido: {candidatura.candidato.cargoPretendido}</p>
                                                 </div>
                                             </div>
                                         </div>

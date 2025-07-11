@@ -2,7 +2,7 @@ import { Fetch } from "@/util/Fetch"
 
 export const findAllVagas = async () => {
     try {
-        const response = await fetch("http://localhost:8080/api/vagas", {
+        const response = await fetch("http://10.195.107.67:8080/api/vagas", {
             method: "GET"
         })
 
@@ -19,7 +19,7 @@ export const findAllVagas = async () => {
 }
 export const findOneVaga = async (id) => {
         try {
-        const response = await fetch(`http://localhost:8080/api/vagas/${id}`, {
+        const response = await fetch(`http://10.195.107.67:8080/api/vagas/${id}`, {
             method: "GET"
         })
 
@@ -36,7 +36,7 @@ export const findOneVaga = async (id) => {
 }
 export const findAllVagasByRecrutador = async () => {
         try {
-        const response = await Fetch(`http://localhost:8080/api/vagas/recrutador`, {
+        const response = await Fetch(`http://10.195.107.67:8080/api/vagas/recrutador`, {
             method: "GET"
         })
 
