@@ -39,7 +39,7 @@ export default function Card({ vagaEmprego }) {
             {pathname === "/vagas" ? (
                 // Versão detalhada (página /vagas)
                 <article className="w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 dark:border-gray-700">
-                    <header className="bg-gradient-to-r from-blue-400 to-blue-500 p-5">
+                    <header className="bg-gradient-to-r from-blue-400 to-blue-500 p-5 dark:from-blue-600 dark:to-blue-700">
                         <div className="flex justify-between items-start">
                             <div className="flex items-center gap-4">
                                 <div className="flex-shrink-0">
@@ -109,7 +109,7 @@ export default function Card({ vagaEmprego }) {
 
                         <Link
                             href={{ pathname: "/vagas/[id]", query: { id: id } }}
-                            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-md transition-colors duration-300"
+                            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700 text-white font-medium rounded-md transition-colors duration-300"
                         >
                             Ver detalhes
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

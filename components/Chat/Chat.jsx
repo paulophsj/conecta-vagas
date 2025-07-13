@@ -3,6 +3,8 @@ import SockJS from 'sockjs-client';
 import { Client } from "@stomp/stompjs";
 import { findAllUserChats, findOneChat } from '@/api/Chat';
 import { useUser } from '../UserContext';
+import { toast } from 'react-toastify';
+import Spinner from '../Spinner';
 
 export const chatContext = createContext(null)
 
@@ -39,11 +41,8 @@ export default function Chat({ children }) {
     const socket = new SockJS("http://10.195.107.67:8080/ws");
     const client = new Client({
       webSocketFactory: () => socket,
-      debug: (str) => console.log(str),
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log(`Conectado ao WebSocket para o chat ${chatId}`);
-
         client.subscribe(`/chat/mensagem/${chatId}`, (message) => {
           const novaMensagem = JSON.parse(message.body);
 
@@ -62,14 +61,15 @@ export default function Chat({ children }) {
               ? {
                 ...chat,
                 mensagens: [...(chat.mensagens || []), novaMensagem],
-                lastMessage: novaMensagem
+                lastMessage: novaMensagem,
+                newMessage: message.body === chat.lastMessage?.conteudo ? false : true
               }
               : chat
           ));
         });
       },
       onStompError: (frame) => {
-        console.error(`Erro no STOMP para chat ${chatId}:`, frame);
+        toast.error(`Erro no STOMP para chat ${chatId}:` + frame, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
       }
     });
 
@@ -88,7 +88,8 @@ export default function Chat({ children }) {
 
       setChats(response.map(chat => ({
         ...chat,
-        lastMessage: chat.mensagens?.slice(-1)[0]
+        lastMessage: chat.mensagens?.slice(-1)[0],
+        newMessage: true
       })));
 
       setLoading(false);
@@ -101,15 +102,21 @@ export default function Chat({ children }) {
   useEffect(() => {
     if (isOpen) {
       fetchChats();
+      toast.success("Você se conectou ao chat", { position: "top-center", pauseOnHover: false, autoClose: 1500 })
+    }
+    else {
+      toast.info("Você se desconectou do chat", { position: "top-center", pauseOnHover: false, autoClose: 1500 })
     }
 
     // Cleanup all WebSocket connections when component unmounts or chat closes
+
     return () => {
       Object.values(stompClients.current).forEach(client => {
         client.deactivate();
       });
       stompClients.current = {};
     };
+
   }, [isOpen]);
 
   const toggleChat = () => {
@@ -139,11 +146,11 @@ export default function Chat({ children }) {
       // Atualiza o chat na lista de chats com as mensagens mais recentes
       setChats(prev => prev.map(c =>
         c.id === chat.id
-          ? { ...c, mensagens: messages.mensagens || [], lastMessage: messages.mensagens?.slice(-1)[0] }
+          ? { ...c, mensagens: messages.mensagens || [], lastMessage: messages.mensagens?.slice(-1)[0], newMessage: false }
           : c
       ));
     } catch (error) {
-      console.error("Erro ao carregar mensagens:", error);
+      toast.error("Erro ao carregar mensagens", { position: "top-center", pauseOnHover: false, autoClose: 1500 })
     }
   };
 
@@ -156,7 +163,7 @@ export default function Chat({ children }) {
     const client = stompClients.current[activeChat.id];
 
     if (!client?.connected) {
-      console.error("WebSocket not connected");
+      toast.error("WebSocket not connected", { position: "top-center", pauseOnHover: false, autoClose: 1500 });
       return;
     }
 
@@ -174,7 +181,7 @@ export default function Chat({ children }) {
         }),
       });
     } catch (error) {
-      console.error("Error sending message:", error);
+      toast.error("Erro ao enviar mensagem:" + error, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
     } finally {
       setMessage('');
       inputRef.current?.focus();
@@ -223,7 +230,9 @@ export default function Chat({ children }) {
                 {!activeChat ? (
                   <div className="w-full overflow-y-auto">
                     {loading ? (
-                      <div className="p-4 text-center dark:text-gray-300">Carregando chats...</div>
+                      <div className="p-4 text-center dark:text-gray-300">
+                        <Spinner />
+                      </div>
                     ) : error ? (
                       <div className="p-4 text-center text-red-500 dark:text-red-400">{error}</div>
                     ) : (
@@ -253,7 +262,12 @@ export default function Chat({ children }) {
                                 </p>
                               </div>
                               {chat.lastMessage && (
-                                <span className="text-xs text-gray-400 dark:text-gray-500">
+                                <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-3">
+                                  {
+                                    chat.newMessage && (
+                                      <div className='rounded-full w-3 h-3 bg-green-500'></div>
+                                    )
+                                  }
                                   {formatDateTime(chat.lastMessage.horaMensagem)}
                                 </span>
                               )}

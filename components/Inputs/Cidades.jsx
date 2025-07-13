@@ -8,14 +8,14 @@ export default function Cidades({ byEstado }) {
     useEffect(() => {
         if (byEstado) {
             const filtered = municipios
-                .filter((municipio) => 
+                .filter((municipio) =>
                     municipio.microrregiao?.mesorregiao?.UF?.sigla?.toLowerCase() === byEstado.toLowerCase()
                 )
-                .map((value) => ({ 
-                    id: value.id, 
-                    nome: value.nome 
+                .map((value) => ({
+                    id: value.id,
+                    nome: value.nome
                 }));
-            
+
             setOpcoes(filtered)
         } else {
             setOpcoes([])
@@ -26,7 +26,7 @@ export default function Cidades({ byEstado }) {
         <select
             id="cidade"
             name="cidade"
-            className={`${!byEstado ? "bg-gray-200 opacity-50 pointer-events-none select-none text-gray-400" : ""} w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400`}
+            className={`${!byEstado ? "bg-gray-200 dark:bg-gray-700 opacity-50 pointer-events-none select-none text-gray-400 dark:text-gray-500" : ""} w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white`}
             defaultValue=""
         >
             <option value={""} disabled>Selecionar Cidade</option>
