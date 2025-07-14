@@ -5,7 +5,7 @@ export const createChat = async (idCandidato) => {
         const requestBody = {
             idCandidato: idCandidato,
         }
-        const response = await Fetch(`http://192.168.15.127:8080/api/chat`, {
+        const response = await Fetch(`http://10.221.211.67:8080/api/chat`, {
             method: "POST",
             body: JSON.stringify(requestBody)
         })
@@ -25,7 +25,7 @@ export const findAllUserChats = async () => {
     try {
         const type = localStorage.getItem("type")
 
-        const response = await Fetch(`http://192.168.15.127:8080/api/chat/${type}`, {
+        const response = await Fetch(`http://10.221.211.67:8080/api/chat/${type}`, {
             method: "GET"
         })
 
@@ -42,7 +42,7 @@ export const findAllUserChats = async () => {
 }
 export const findOneChat = async (idChat) => {
     try {
-        const response = await Fetch(`http://192.168.15.127:8080/api/chat/${idChat}`, {
+        const response = await Fetch(`http://10.221.211.67:8080/api/chat/${idChat}`, {
             method: "GET"
         })
 

@@ -76,10 +76,10 @@ export default function VagasAplicadasPage() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6"> {/* Layout em grid para desktop */}
                         {candidaturas.map((candidatura) => {
-                            const vaga = candidatura.vagas;
+                            const vaga = candidatura?.vagas;
                             return (
                                 <article 
-                                    key={candidatura.id}
+                                    key={candidatura?.id}
                                     className="bg-white rounded-xl overflow-hidden shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-300"
                                 >
                                     {/* Cabeçalho */}
@@ -109,7 +109,7 @@ export default function VagasAplicadasPage() {
                                         </div>
                                         
                                         <p className="mt-3 text-sm text-white">
-                                            <span className="font-medium">Candidatura em:</span> {formatDate(candidatura.dataCriacao)}
+                                            <span className="font-medium">Candidatura em:</span> {formatDate(candidatura?.dataCriacao)}
                                         </p>
                                     </header>
 

@@ -4,18 +4,18 @@ import { useRouter } from "next/router";
 import { findAllVagas } from "@/api/Vagas";
 import Spinner from "../Spinner";
 
-export default function ListCard({ quantidade, setIsLoading = () => {}}) {
+export default function ListCard({ quantidade, setIsLoading = () => {}, listCardFilter}) {
     const [cards, setCards] = useState(null);
     const { pathname } = useRouter()
 
     useEffect(() => {
         const fetchCards = async () => {
             const response = await findAllVagas()
-            setCards(response.map((vagaEmprego) => <Card key={vagaEmprego.id} vagaEmprego={vagaEmprego} />).slice(0, quantidade));
+            setCards(response.map((vagaEmprego) => <Card cardFilter={listCardFilter} key={vagaEmprego.id} vagaEmprego={vagaEmprego} />).slice(0, quantidade));
             setIsLoading(false)
         };
         fetchCards();
-    }, [quantidade, setIsLoading])
+    }, [quantidade, setIsLoading, listCardFilter])
 
     if(cards === null){
         return <Spinner />

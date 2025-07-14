@@ -3,7 +3,7 @@ import { Auth } from "./Auth"
 
 export const createCandidato = async (candidato) => {
     try {
-        const response = await Fetch(`http://192.168.15.127:8080/api/candidato`, {
+        const response = await Fetch(`http://10.221.211.67:8080/api/candidato`, {
             method: "POST",
             body: JSON.stringify(candidato)
         })
@@ -31,7 +31,7 @@ export const createCandidato = async (candidato) => {
 }
 export const updateCandidato = async (novoCandidato) => {
     try {
-        const response = await Fetch(`http://192.168.15.127:8080/api/candidato`, {
+        const response = await Fetch(`http://10.221.211.67:8080/api/candidato`, {
             method: "PUT",
             body: JSON.stringify(novoCandidato)
         })
@@ -54,7 +54,7 @@ export const updateCandidato = async (novoCandidato) => {
 export const createEndereco = async (endereco) => {
     for (const umEndereco of endereco) {
         try {
-            const response = await Fetch(`http://192.168.15.127:8080/api/candidato/endereco`, {
+            const response = await Fetch(`http://10.221.211.67:8080/api/candidato/endereco`, {
                 method: "POST",
                 body: JSON.stringify(umEndereco)
             })
@@ -78,7 +78,7 @@ export const createEndereco = async (endereco) => {
 export const createFormacao = async (formacao) => {
     for (const umaFormacao of formacao) {
         try {
-            const response = await Fetch(`http://192.168.15.127:8080/api/candidato/formacao`, {
+            const response = await Fetch(`http://10.221.211.67:8080/api/candidato/formacao`, {
                 method: "POST",
                 body: JSON.stringify(umaFormacao)
             })
