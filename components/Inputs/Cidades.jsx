@@ -1,9 +1,10 @@
 import { useLocalidades } from "@/hooks/useLocalidades"
 import { useEffect, useState } from "react"
 
-export default function Cidades({ byEstado }) {
+export default function Cidades({defaultValue = null, byEstado }) {
     const [opcoes, setOpcoes] = useState([])
     const { municipios } = useLocalidades()
+    const [selectedValue, setSelectedValue] = useState(defaultValue || "")
 
     useEffect(() => {
         if (byEstado) {
@@ -27,7 +28,9 @@ export default function Cidades({ byEstado }) {
             id="cidade"
             name="cidade"
             className={`${!byEstado ? "bg-gray-200 dark:bg-gray-700 opacity-50 pointer-events-none select-none text-gray-400 dark:text-gray-500" : ""} w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white`}
-            defaultValue=""
+            value={selectedValue}
+            onChange={(e) => setSelectedValue(e.target.value)}
+            disabled={!byEstado}
         >
             <option value={""} disabled>Selecionar Cidade</option>
             {opcoes.map((item) => (

@@ -113,7 +113,7 @@ export default function CadastroPage() {
       await createCandidato(informacoesPessoais);
       await createEndereco(endereco);
       await createFormacao(formacaoAcademica);
-      toast.success("Você foi cadastrado com sucesso!");
+      toast.success("Você foi cadastrado com sucesso!"+ '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
     } catch (error) {
       toast.error(error.message);
     }
@@ -122,7 +122,7 @@ export default function CadastroPage() {
   const salvarRecrutador = async (recrutadorProfile) => {
     try {
       await createRecrutador(recrutadorProfile);
-      toast.success("Você foi cadastrado com sucesso!");
+      toast.success("Você foi cadastrado com sucesso!"+ '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
     } catch (error) {
       toast.error(error.message);
     }
@@ -674,7 +674,7 @@ export default function CadastroPage() {
                         <div className="flex flex-wrap justify-between gap-4">
                           <div className="w-full sm:w-3/12">
                             <label htmlFor="estado" className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Estado</label>
-                            <Estados handleChange={(e) => setSelectedEstado(e.target.value)} />
+                            <Estados handleChange={(e) => setSelectedEstado(e)} />
                           </div>
                           <div className="w-full sm:w-8/12">
                             <label htmlFor="cidade" className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Cidade</label>

@@ -38,7 +38,7 @@ export default function Chat({ children }) {
   const setupWebSocketForChat = (chatId) => {
     if (stompClients.current[chatId]) return;
 
-    const socket = new SockJS("http://10.195.107.67:8080/ws");
+    const socket = new SockJS("http://localhost:8080/ws");
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -103,9 +103,6 @@ export default function Chat({ children }) {
     if (isOpen) {
       fetchChats();
       toast.success("Você se conectou ao chat", { position: "top-center", pauseOnHover: false, autoClose: 1500 })
-    }
-    else {
-      toast.info("Você se desconectou do chat", { position: "top-center", pauseOnHover: false, autoClose: 1500 })
     }
 
     // Cleanup all WebSocket connections when component unmounts or chat closes

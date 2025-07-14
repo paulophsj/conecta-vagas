@@ -275,7 +275,7 @@ export default function RecrutadorDashboard() {
                 <h3 className="text-xl font-bold text-blue-500 dark:text-blue-300 mb-4">Ações Rápidas</h3>
                 <div className="flex flex-wrap gap-4">
                     <Link
-                        href="/perfil/editar"
+                        href="/profile/edit"
                         className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
