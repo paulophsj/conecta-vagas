@@ -1,19 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { IMaskInput } from "react-imask";
 import { useUser } from "@/components/UserContext";
-import { createVaga } from "@/api/Vagas";
+import { deleteVaga, findOneVaga, updateVaga } from "@/api/Vagas";
 
-export default function CriarVagaPage() {
+export default function EditarVagaPage() {
   const router = useRouter();
+  const { id } = router.query;
   const { user } = useUser();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [vaga, setVaga] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (id && user) {
+      fetchVaga();
+    }
+  }, [id, user]);
+
+  const fetchVaga = async () => {
+    try {
+      const data = await findOneVaga(id);
+      setVaga(data);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Erro ao carregar vaga: " + error.message, { position: "top-center" });
+      router.push('/vagas');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
@@ -23,25 +40,49 @@ export default function CriarVagaPage() {
     data.cargaHoraria = data.cargaHoraria ? parseInt(data.cargaHoraria) : null;
 
     try {
-      await createVaga(data);
-      toast.success("Vaga criada com sucesso!", { 
-        position: "top-center", 
-        pauseOnHover: false, 
-        onClose: () => router.push('/vagas'), 
-        autoClose: 1500 
+      await updateVaga(id, data);
+      toast.success("Vaga atualizada com sucesso!", {
+        position: "top-center",
+        pauseOnHover: false,
+        onClose: () => router.push('/profile'),
+        autoClose: 1500
       });
     } catch (error) {
       toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
-      setIsSubmitting(false);
     }
   };
+
+const excluirVaga = async () => {
+    try {
+      const response = await deleteVaga(id);
+      toast.success(response, {
+        position: "top-center",
+        pauseOnHover: false,
+        onClose: () => router.push('/profile'),
+        autoClose: 1500
+      });
+    } catch (error) {
+      toast.error(error.toString(), {
+        position: "top-center", 
+        pauseOnHover: false, 
+        autoClose: 1500 
+      });
+    }
+}
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center p-4">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-6xl">
         <form className="space-y-8" onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold text-center text-blue-400 dark:text-blue-500 mb-8">
-            Criar Nova Vaga de Emprego
+            Editar Vaga de Emprego
           </h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -63,6 +104,7 @@ export default function CriarVagaPage() {
                     type="text"
                     id="titulo"
                     name="titulo"
+                    defaultValue={vaga?.titulo}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     placeholder="Título da vaga"
                     required
@@ -79,6 +121,7 @@ export default function CriarVagaPage() {
                   <textarea
                     id="descricao"
                     name="descricao"
+                    defaultValue={vaga?.descricao}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     rows="4"
                     placeholder="Descrição detalhada da vaga..."
@@ -95,6 +138,7 @@ export default function CriarVagaPage() {
                   <textarea
                     id="requisitos"
                     name="requisitos"
+                    defaultValue={vaga?.requisitos}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     rows="4"
                     placeholder="Liste os requisitos para a vaga..."
@@ -123,6 +167,7 @@ export default function CriarVagaPage() {
                     type="text"
                     id="localizacao"
                     name="localizacao"
+                    defaultValue={vaga?.localizacao}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     placeholder="Localização do trabalho"
                     maxLength={600}
@@ -154,6 +199,7 @@ export default function CriarVagaPage() {
                       type="text"
                       id="salario"
                       name="salario"
+                      defaultValue={vaga?.salario}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                       placeholder="0,00"
                     />
@@ -178,6 +224,7 @@ export default function CriarVagaPage() {
                       type="text"
                       id="cargaHoraria"
                       name="cargaHoraria"
+                      defaultValue={vaga?.cargaHoraria}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                       placeholder="Horas semanais"
                     />
@@ -195,6 +242,7 @@ export default function CriarVagaPage() {
                     <select
                       id="tipoContrato"
                       name="tipoContrato"
+                      defaultValue={vaga?.tipoContrato}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                       required
                     >
@@ -220,6 +268,7 @@ export default function CriarVagaPage() {
                     <select
                       id="formato"
                       name="formato"
+                      defaultValue={vaga?.formato}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     >
                       <option value="">Selecione</option>
@@ -240,7 +289,7 @@ export default function CriarVagaPage() {
                   <select
                     id="ativa"
                     name="ativa"
-                    defaultValue="true"
+                    defaultValue={vaga?.ativa ? 'true' : 'false'}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                   >
                     <option value="true">Ativa</option>
@@ -256,25 +305,24 @@ export default function CriarVagaPage() {
               type="button"
               onClick={() => router.back()}
               className="cursor-pointer bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-700 text-white py-2 px-6 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
-              disabled={isSubmitting}
             >
               Cancelar
             </button>
-            <button
-              type="submit"
-              className="cursor-pointer bg-blue-400 dark:bg-blue-600 hover:bg-blue-500 dark:hover:bg-blue-700 text-white py-2 px-6 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Criando...
-                </span>
-              ) : "Criar Vaga"}
-            </button>
+            <div className="flex gap-5">
+              <button
+              type="button"
+              onClick={() => excluirVaga()}
+                className="cursor-pointer bg-red-400 dark:bg-red-600 hover:bg-red-500 dark:hover:bg-red-700 text-white py-2 px-6 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
+              >
+                Excluir Vaga
+              </button>
+              <button
+                type="submit"
+                className="cursor-pointer bg-blue-400 dark:bg-blue-600 hover:bg-blue-500 dark:hover:bg-blue-700 text-white py-2 px-6 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+              >
+                Salvar Alterações
+              </button>
+            </div>
           </div>
         </form>
       </div>

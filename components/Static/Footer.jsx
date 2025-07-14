@@ -7,7 +7,7 @@ export default function Footer() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-8 py-10 max-sm:max-w-sm max-sm:mx-auto gap-y-8">
                     <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0 flex flex-col items-center justify-center">
                         <Link href={{ pathname: "/" }} className="flex flex-col items-center">
-                            <svg className="shrink-0 w-10 h-10 text-gray-500 transition duration-75 dark:text-gray-200 group-hover:text-white dark:group-hover:text-white mb-2"
+                            <svg className="shrink-0 w-10 h-10 text-white transition duration-75 dark:text-gray-200 group-hover:text-white dark:group-hover:text-white mb-2"
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor"

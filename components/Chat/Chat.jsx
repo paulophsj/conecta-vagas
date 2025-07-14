@@ -26,6 +26,13 @@ export default function Chat({ children }) {
   useEffect(() => {
     if (user === null) setShowButton(false)
     else setShowButton(true)
+
+    return () => {
+      setIsOpen(false)
+
+      Object.values(stompClients.current).forEach(client => {client.deactivate()})
+      stompClients.current = {}
+    }
   }, [user])
 
   useEffect(() => {
@@ -38,7 +45,7 @@ export default function Chat({ children }) {
   const setupWebSocketForChat = (chatId) => {
     if (stompClients.current[chatId]) return;
 
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS("http://192.168.15.127:8080/ws");
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -290,7 +297,6 @@ export default function Chat({ children }) {
                         <span className="text-xl mr-2 dark:text-gray-300">{(getOtherUser(activeChat).nome || getOtherUser(activeChat).nomeEmpresa).charAt(0)}</span>
                         <div>
                           <p className="font-medium dark:text-gray-200">{(getOtherUser(activeChat).nome || getOtherUser(activeChat).nomeEmpresa)}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Online</p>
                         </div>
                       </div>
                     </div>

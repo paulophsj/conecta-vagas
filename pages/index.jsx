@@ -214,7 +214,7 @@ export default function Index() {
       </section>
 
       {/* How It Works */}
-      <section className="dark:bg-gray-800">
+      <section className="">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-blue-400 dark:text-white mb-4">
             Como{" "}

@@ -166,7 +166,7 @@ export default function RecrutadorDashboard() {
                                             </div>
                                             <div className="text-right">
                                                 <p className="text-lg font-bold text-blue-600 dark:text-blue-300">
-                                                    {vaga.salario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                                    {vaga?.salario?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || "A combinar"}
                                                 </p>
                                                 <p className="text-sm text-blue-500 dark:text-blue-400">
                                                     Criada em: {formatDate(vaga.dataCriacao)}
@@ -179,7 +179,7 @@ export default function RecrutadorDashboard() {
                                         </div>
                                         <div className="mt-4 flex justify-end gap-3">
                                             <Link
-                                                href={`/vagas/editar/${vaga.id}`}
+                                                href={{pathname: "/vagas/editar/[id]", query: {id: vaga.id}}}
                                                 className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -217,7 +217,7 @@ export default function RecrutadorDashboard() {
 
             {/* Stats Section */}
             <section className="mb-12">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
                         <div className="flex items-center justify-between">
                             <div>
@@ -254,8 +254,8 @@ export default function RecrutadorDashboard() {
                                 <p className="text-3xl font-bold text-blue-600 dark:text-blue-300">
                                     {recruiterVagas.length > 0
                                         ?
-                                        (recruiterVagas.reduce((prev, curr) => prev + curr.salario, 0) / recruiterVagas.length).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-                                        : 'R$ 0,00'
+                                        (recruiterVagas.reduce((prev, curr) => prev + curr?.salario, 0) / recruiterVagas.length).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                                        : 'A caombinar'
                                     }
                                 </p>
                             </div>

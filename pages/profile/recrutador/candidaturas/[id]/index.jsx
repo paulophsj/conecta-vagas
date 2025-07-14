@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useUser } from '@/components/UserContext';
 import { createChat } from '@/api/Chat';
 import { chatContext } from '@/components/Chat/Chat';
+import { findOneVaga } from '@/api/Vagas';
 
 const CandidaturasPage = () => {
     const router = useRouter();
@@ -20,11 +21,17 @@ const CandidaturasPage = () => {
     const [candidaturaExpandida, setCandidaturaExpandida] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [vaga, setVaga] = useState(null)
+
     useEffect(() => {
         const fetchCandidaturas = async () => {
             try {
-                const response = await checkAllCandidaturasByIdVaga(id);
-                setCandidaturas(response);
+                const candidatuas = await checkAllCandidaturasByIdVaga(id);
+                const vaga = await findOneVaga(id)
+
+                setCandidaturas(candidatuas);
+                setVaga(vaga)
+                
                 toast.success('Candidaturas carregadas com sucesso!', { position: "top-center", pauseOnHover: false, autoClose: 1500 });
             } catch (error) {
                 toast.error(error, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
@@ -65,11 +72,11 @@ const CandidaturasPage = () => {
 
     const criarChat = async (idCandidato) => {
         try {
-            const response = await createChat(idCandidato)
+            const candidatuas = await createChat(idCandidato)
             await fetchChats()
             setIsOpen(true)
             toast.success('Chat criado com sucesso!', { position: "top-center", pauseOnHover: false, autoClose: 1500 });
-            return response;
+            return candidatuas;
         } catch (error) {
             toast.error(error, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
         }
@@ -80,8 +87,8 @@ const CandidaturasPage = () => {
     return (
         <ProtectedRouter byRecrutador={true}>
             <Head>
-                <title>Candidaturas para {candidaturas[0].vagas.titulo}</title>
-                <meta name="description" content={`Candidaturas para a vaga de ${candidaturas[0].vagas.titulo}`} />
+                <title>Candidaturas para {vaga?.titulo}</title>
+                <meta name="description" content={`Candidaturas para a vaga de ${vaga?.titulo}`} />
             </Head>
 
             <div className="min-h-screen dark:bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
@@ -110,10 +117,10 @@ const CandidaturasPage = () => {
                             {/* Título e Subtítulo */}
                             <div className="text-center">
                                 <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 leading-tight">
-                                    Candidatos para <span className="text-blue-600 dark:text-blue-400">{candidaturas[0].vagas.titulo}</span>
+                                    Candidatos para <span className="text-blue-600 dark:text-blue-400">{vaga?.titulo}</span>
                                 </h1>
                                 <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">
-                                    {candidaturas[0].vagas.nomeEmpresa}
+                                    {vaga?.nomeEmpresa}
                                 </p>
 
                                 {/* Linha decorativa */}
@@ -137,17 +144,17 @@ const CandidaturasPage = () => {
                                 <div>
                                     <div className="mb-3">
                                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Descrição</h3>
-                                        <p className="text-gray-900 dark:text-white mt-1">{candidaturas[0]?.vagas?.descricao}</p>
+                                        <p className="text-gray-900 dark:text-white mt-1">{vaga?.descricao}</p>
                                     </div>
 
                                     <div className="mb-3">
                                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Requisitos</h3>
-                                        <p className="text-gray-900 dark:text-white mt-1">{candidaturas[0]?.vagas?.requisitos}</p>
+                                        <p className="text-gray-900 dark:text-white mt-1">{vaga?.requisitos}</p>
                                     </div>
 
                                     <div className="mb-3">
                                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Localização</h3>
-                                        <p className="text-gray-900 dark:text-white mt-1">{candidaturas[0]?.vagas?.localizacao}</p>
+                                        <p className="text-gray-900 dark:text-white mt-1">{vaga?.localizacao}</p>
                                     </div>
                                 </div>
 
@@ -156,20 +163,20 @@ const CandidaturasPage = () => {
                                     <div className="grid grid-cols-2 gap-4 mb-3">
                                         <div>
                                             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Salário</h3>
-                                            <p className="text-gray-900 dark:text-white mt-1">{formatSalary(candidaturas[0]?.vagas?.salario)}</p>
+                                            <p className="text-gray-900 dark:text-white mt-1">{formatSalary(vaga?.salario)}</p>
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Carga Horária</h3>
-                                            <p className="text-gray-900 dark:text-white mt-1">{candidaturas[0]?.vagas?.cargaHoraria}h semanais</p>
+                                            <p className="text-gray-900 dark:text-white mt-1">{vaga?.cargaHoraria}h semanais</p>
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Tipo de Contrato</h3>
-                                            <p className="text-gray-900 dark:text-white mt-1">{candidaturas[0]?.vagas?.tipoContrato}</p>
+                                            <p className="text-gray-900 dark:text-white mt-1">{vaga?.tipoContrato}</p>
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</h3>
-                                            <span className={`mt-1 px-2 py-1 text-xs rounded-full ${candidaturas[0]?.vagas?.ativa ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'}`}>
-                                                {candidaturas[0]?.vagas?.ativa ? 'Ativa' : 'Inativa'}
+                                            <span className={`mt-1 px-2 py-1 text-xs rounded-full ${vaga?.ativa ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'}`}>
+                                                {vaga?.ativa ? 'Ativa' : 'Inativa'}
                                             </span>
                                         </div>
                                     </div>
@@ -177,11 +184,11 @@ const CandidaturasPage = () => {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
                                             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Criada em</h3>
-                                            <p className="text-gray-900 dark:text-white mt-1">{formatDate(candidaturas[0]?.vagas?.dataCriacao)}</p>
+                                            <p className="text-gray-900 dark:text-white mt-1">{formatDate(vaga?.dataCriacao)}</p>
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Atualizada em</h3>
-                                            <p className="text-gray-900 dark:text-white mt-1">{formatDate(candidaturas[0]?.vagas?.dataUltimaModificacao)}</p>
+                                            <p className="text-gray-900 dark:text-white mt-1">{formatDate(vaga?.dataUltimaModificacao)}</p>
                                         </div>
                                     </div>
                                 </div>

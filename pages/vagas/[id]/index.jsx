@@ -13,6 +13,8 @@ export default function VagaDetalhes() {
     const [vaga, setVaga] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [hasToken, setHasToken] = useState(null)
+
     useEffect(() => {
         if (id) {
             const fetchVaga = async () => {
@@ -20,13 +22,17 @@ export default function VagaDetalhes() {
                     const response = await findOneVaga(id)
                     setVaga(response);
                 } catch (error) {
-                    console.error("Erro ao carregar vaga:", error);
+                    toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
                 } finally {
                     setLoading(false);
                 }
             };
             fetchVaga();
         }
+
+        const token = localStorage.getItem("token")
+        if (token) setHasToken(true)
+        else setHasToken(false)
     }, [id]);
 
     const enviarCurriculo = async () => {
@@ -34,7 +40,7 @@ export default function VagaDetalhes() {
             const response = await enviarCandidatura(id)
             return toast.success(response, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
         } catch (error) {
-            return toast.error(error, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
+            return toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 })
         }
     }
 
@@ -62,7 +68,7 @@ export default function VagaDetalhes() {
 
     if (!vaga) {
         return (
-            <ProtectedRouter byCandidato={true}>
+            <ProtectedRouter permiteAll={true}>
                 <div className="dark:bg-gray-900 flex items-center justify-center">
                     <div className="text-center">
                         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Vaga não encontrada</h1>
@@ -80,7 +86,7 @@ export default function VagaDetalhes() {
     }
 
     return (
-        <ProtectedRouter byCandidato={true}>
+        <ProtectedRouter permiteAll={true}>
             <Head>
                 <title>{vaga.titulo} | Nome da Empresa</title>
                 <meta name="description" content={`Detalhes da vaga para ${vaga.titulo}`} />
@@ -213,9 +219,16 @@ export default function VagaDetalhes() {
 
                             {/* Ação - Candidatar-se */}
                             <div className="mt-10 pt-6">
-                                <button onClick={enviarCurriculo} className="w-full text-center px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer">
-                                    Candidatar-se à Vaga
-                                </button>
+                                {
+                                    hasToken === true ?
+                                    <button onClick={enviarCurriculo} className="w-full text-center px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer">
+                                        Candidatar-se à Vaga
+                                    </button>
+                                    :
+                                    <button disabled="true" className="w-full text-center px-4 py-3 bg-gray-600 opacity-50 text-white font-medium rounded-lg transition-colors duration-300 flex items-center justify-center gap-2">
+                                        Você precisa estar logado para se candidatar.
+                                    </button>
+                                }
                             </div>
                         </section>
                     </article>

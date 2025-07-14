@@ -2,7 +2,7 @@ import { Fetch } from "@/util/Fetch"
 
 export const createRecrutador = async (recrutador) => {
     try {
-        const response = await Fetch(`http://localhost:8080/api/recrutador`, {
+        const response = await Fetch(`http://192.168.15.127:8080/api/recrutador`, {
             method: "POST",
             body: JSON.stringify(recrutador)
         })
@@ -17,7 +17,7 @@ export const createRecrutador = async (recrutador) => {
 }
 export const updateRecrutador = async (novoRecrutador) => {
         try {
-        const response = await Fetch(`http://localhost:8080/api/recrutador`, {
+        const response = await Fetch(`http://192.168.15.127:8080/api/recrutador`, {
             method: "PUT",
             body: JSON.stringify(novoRecrutador)
         })
