@@ -9,7 +9,14 @@ export const createCandidato = async (candidato) => {
         })
         const data = await response.json()
         if (!response.ok) {
-            throw new Error(data?.message || "Erro ao cadastrar usuário")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
         await Auth(
             {
@@ -17,6 +24,28 @@ export const createCandidato = async (candidato) => {
                 "username": candidato.email
             }
         )
+        return data
+    } catch (error) {
+        throw error
+    }
+}
+export const updateCandidato = async (novoCandidato) => {
+    try {
+        const response = await Fetch(`http://localhost:8080/api/candidato`, {
+            method: "PUT",
+            body: JSON.stringify(novoCandidato)
+        })
+        const data = await response.json()
+        if (!response.ok) {
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
+        }
         return data
     } catch (error) {
         throw error
@@ -31,11 +60,16 @@ export const createEndereco = async (endereco) => {
             })
             const data = await response.json()
             if (!response.ok) {
-                console.error("ERRO NO ENDEREÇO:", data)
-                throw new Error(data?.message || "Erro ao criar o endereço")
+                if (data?.message) {
+                    throw new Error(data?.message)
+                }
+                else {
+                    for (const err of data?.errors) {
+                        throw new Error(err.defaultMessage)
+                    }
+                }
             }
         } catch (error) {
-            console.error("ERRO AO CRIAR ENDEREÇO:", error)
             throw error
         }
     }
@@ -50,8 +84,14 @@ export const createFormacao = async (formacao) => {
             })
             const data = await response.json()
             if (!response.ok) {
-                console.error("ERRO NA FORMACAO:", data)
-                throw new Error(data?.message || "Erro ao cadastrar formação.")
+                if (data?.message) {
+                    throw new Error(data?.message)
+                }
+                else {
+                    for (const err of data?.errors) {
+                        throw new Error(err.defaultMessage)
+                    }
+                }
             }
         } catch (error) {
             throw error

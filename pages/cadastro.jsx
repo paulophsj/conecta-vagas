@@ -115,7 +115,7 @@ export default function CadastroPage() {
       await createFormacao(formacaoAcademica);
       toast.success("Você foi cadastrado com sucesso!"+ '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
     }
   };
 
@@ -124,7 +124,7 @@ export default function CadastroPage() {
       await createRecrutador(recrutadorProfile);
       toast.success("Você foi cadastrado com sucesso!"+ '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
     }
   };
 

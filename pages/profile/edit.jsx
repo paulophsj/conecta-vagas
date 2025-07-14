@@ -12,8 +12,17 @@ export default function EditUserPage() {
     }, [type])
 
     return (
-        <ProtectedRouter byCandidato={true} byRecrutador={true}>
-            {type === 'candidato' ? <CandidatoUpdate /> : <RecrutadorUpdate />}
-        </ProtectedRouter>
+        <>
+            {
+                type === "recrutador" ?
+                <ProtectedRouter byRecrutador={true}>
+                    <RecrutadorUpdate />
+                </ProtectedRouter>
+                :
+                <ProtectedRouter byCandidato={true}>
+                    <CandidatoUpdate />
+                </ProtectedRouter>
+            }
+        </>
     )
 }
