@@ -15,14 +15,14 @@ export default function ProtectedRouter({ children, byCandidato = false, byRecru
       return
     }
 
-    if (byCandidato === true && type == 'candidato' || byRecrutador === true && type == 'recrutador' || permiteAll === true) {
+    if (byCandidato === true && type === 'candidato' || byRecrutador === true && type === 'recrutador' || permiteAll === true) {
       setLoading(false)
+      return
     }
     else {
       router.back()
       return
     }
-    setLoading(false)
   }, [])
 
   if (loading) return <Spinner />

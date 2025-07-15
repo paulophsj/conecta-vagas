@@ -45,7 +45,7 @@ export default function Chat({ children }) {
   const setupWebSocketForChat = (chatId) => {
     if (stompClients.current[chatId]) return;
 
-    const socket = new SockJS("http://192.168.1.40:8080/ws");
+    const socket = new SockJS("http://10.221.211.67:8080/ws");
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,

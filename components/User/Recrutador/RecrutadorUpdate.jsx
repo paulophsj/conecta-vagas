@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { IMaskInput } from "react-imask";
 import { toast } from "react-toastify";
 import Estados from "@/components/Inputs/Estados";
@@ -211,7 +211,7 @@ export default function RecrutadorUpdate() {
                   <select
                     id="setorEmpresa"
                     name="setorEmpresa"
-                    value={user?.setorEmpresa}
+                    defaultValue={user?.setorEmpresa}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     required
                   >
@@ -238,7 +238,7 @@ export default function RecrutadorUpdate() {
                   <textarea
                     id="descricaoEmpresa"
                     name="descricaoEmpresa"
-                    value={user?.descricaoEmpresa}
+                    defaultValue={user?.descricaoEmpresa}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                     rows="5"
                     placeholder="Descreva sua empresa..."

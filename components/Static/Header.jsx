@@ -6,13 +6,13 @@ import { useUser } from "../UserContext"
 
 export default function Header() {
     const { isOpen, setIsOpen } = useSideBar()
-    const { user } = useUser()
+    const { user, sairDaConta } = useUser()
     const [type, setType] = useState(null)
 
     useEffect(() => {
         const hasType = localStorage.getItem("type")
 
-        if(hasType){
+        if (hasType) {
             setType(hasType)
         }
 
@@ -50,6 +50,16 @@ export default function Header() {
                         </li>
                         <li>
                             <Link href={{ pathname: user ? "/profile" : "/login" }} onClick={() => setIsOpen(false)} className="block px-8 font-bold text-white bg-blue-400 rounded-sm hover:bg-blue-500 md:hover:bg-blue-500 md:border-0 md:hover:text-white md:px-4 md:py-1 dark:text-white md:dark:hover:text-white dark:hover:bg-blue-500 dark:hover:text-white md:dark:hover:bg-blue-500">{user ? type == "candidato" ? "Área do candidato" : "Área do recrutador" : "Login"}</Link>
+                        </li>
+                        <li>
+                            {
+                                user && <button onClick={() => sairDaConta()} className="flex items-center gap-3 bg-gray-400 text-white py-1 px-8 font-bold rounded-sm hover:bg-gray-500 transition-colors cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                        <path fillRule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                        <path fillRule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                    </svg>
+                                    Sair da conta
+                                </button>}
                         </li>
                     </ul>
                 </div>

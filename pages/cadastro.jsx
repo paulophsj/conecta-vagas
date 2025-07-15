@@ -5,11 +5,14 @@ import Estados from "@/components/Inputs/Estados";
 import ProtectedRouterCaseToken from "@/components/Router/ProtectedRouterCaseToken";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
 import { toast } from "react-toastify";
 
 export default function CadastroPage() {
+  const router = useRouter()
+
   const [formacoesAcademicas, setFormacoesAcademicas] = useState([]);
   const [enderecos, setEnderecos] = useState([]);
   const [isCandidato, setIsCandidato] = useState(true);

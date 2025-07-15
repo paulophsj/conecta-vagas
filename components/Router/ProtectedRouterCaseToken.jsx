@@ -9,9 +9,9 @@ export default function ProtectedRouterCaseToken({ children }) {
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (token) {
-      return router.replace('/login')
+      router.replace('/login')
+      return
     }
-    setLoading(false)
   }, [])
 
   if (loading) return <Spinner />

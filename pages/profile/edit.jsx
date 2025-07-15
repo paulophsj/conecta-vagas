@@ -9,12 +9,14 @@ export default function EditUserPage() {
     useEffect(() => {
         const userType = localStorage.getItem("type")
         setType(userType)
-    }, [type])
+    }, [])
+
+    if (type === null) return null
 
     return (
         <>
             {
-                type === "recrutador" ?
+                type == 'recrutador' ?
                 <ProtectedRouter byRecrutador={true}>
                     <RecrutadorUpdate />
                 </ProtectedRouter>

@@ -180,7 +180,7 @@ export default function CandidatoUpdate() {
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
               Meus Endereços
             </h2>
-            <Link href="/enderecos/novo" className="text-blue-400 dark:text-blue-500 hover:underline">
+            <Link href={{pathname: "/profile/candidato/enderecos/criar"}} className="text-blue-400 dark:text-blue-500 hover:underline">
               + Adicionar Endereço
             </Link>
           </div>
