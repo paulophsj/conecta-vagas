@@ -352,12 +352,6 @@ const CandidaturasPage = () => {
                                                     </svg>
                                                     Criar chat
                                                 </button>
-                                                <button className="cursor-pointer px-5 py-2.5 bg-white dark:bg-gray-700 text-red-600 dark:text-red-400 border border-red-300 dark:border-red-700 rounded-lg hover:bg-red-50 dark:hover:bg-gray-600 transition-colors duration-300 shadow-sm flex items-center gap-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                    Rejeitar Candidatura
-                                                </button>
                                             </div>
                                         </div>
                                     </div>

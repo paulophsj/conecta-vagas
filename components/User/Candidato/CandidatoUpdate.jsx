@@ -189,7 +189,7 @@ export default function CandidatoUpdate() {
             {user?.enderecos?.map((endereco) => (
               <div key={endereco.id} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg relative">
                 <Link 
-                  href={`/enderecos/editar/${endereco.id}`}
+                  href={{ pathname: `candidato/enderecos/editar/[id]`, query: {id: endereco.id}}}
                   className="absolute top-3 right-3 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

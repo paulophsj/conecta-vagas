@@ -2,7 +2,7 @@ import { Fetch } from "@/util/Fetch"
 
 export const findAllVagas = async () => {
     try {
-        const response = await fetch("http://10.221.211.67:8080/api/vagas", {
+        const response = await fetch("http://192.168.1.40:8080/api/vagas", {
             method: "GET"
         })
 
@@ -19,7 +19,7 @@ export const findAllVagas = async () => {
 }
 export const findOneVaga = async (id) => {
     try {
-        const response = await fetch(`http://10.221.211.67:8080/api/vagas/${id}`, {
+        const response = await fetch(`http://192.168.1.40:8080/api/vagas/${id}`, {
             method: "GET"
         })
 
@@ -36,7 +36,7 @@ export const findOneVaga = async (id) => {
 }
 export const findAllVagasByRecrutador = async () => {
     try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/vagas/recrutador`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/vagas/recrutador`, {
             method: "GET"
         })
 
@@ -53,7 +53,7 @@ export const findAllVagasByRecrutador = async () => {
 }
 export const updateVaga = async (id, novaVaga) => {
     try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/vagas/${id}`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/vagas/${id}`, {
             method: "PUT",
             body: JSON.stringify(novaVaga)
         })
@@ -71,7 +71,7 @@ export const updateVaga = async (id, novaVaga) => {
 }
 export const deleteVaga = async (id) => {
     try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/vagas/${id}`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/vagas/${id}`, {
             method: "DELETE",
         })
 
@@ -88,7 +88,7 @@ export const deleteVaga = async (id) => {
 }
 export const createVaga = async (vaga) => {
         try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/vagas`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/vagas`, {
             method: "POST",
             body: JSON.stringify(vaga)
         })
