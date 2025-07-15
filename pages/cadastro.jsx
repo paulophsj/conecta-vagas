@@ -113,7 +113,7 @@ export default function CadastroPage() {
       await createCandidato(informacoesPessoais);
       await createEndereco(endereco);
       await createFormacao(formacaoAcademica);
-      toast.success("Você foi cadastrado com sucesso!"+ '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
+      toast.success("Você foi cadastrado com sucesso!" + '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
     } catch (error) {
       toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
     }
@@ -122,7 +122,7 @@ export default function CadastroPage() {
   const salvarRecrutador = async (recrutadorProfile) => {
     try {
       await createRecrutador(recrutadorProfile);
-      toast.success("Você foi cadastrado com sucesso!"+ '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
+      toast.success("Você foi cadastrado com sucesso!" + '\n' + 'Redirecionando...', { position: "top-center", pauseOnHover: false, onClose: () => router.push('/'), autoClose: 1500 });
     } catch (error) {
       toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
     }
@@ -481,6 +481,22 @@ export default function CadastroPage() {
                               />
                             </div>
 
+                            <div className="">
+                              <label htmlFor={`estado-${endereco.id}`} className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
+                                Estado
+                              </label>
+                              <Estados handleChange={(e) => setSelectedEstado(e)} />
+                            </div>
+
+                            <div className="mb-4">
+                              <label htmlFor={`cidade-${endereco.id}`} className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
+                                Cidade
+                              </label>
+                              <Cidades
+                                byEstado={selectedEstado}
+                              />
+                            </div>
+
                             <div className="mb-4">
                               <label htmlFor={`bairro-${endereco.id}`} className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
                                 Bairro
@@ -493,27 +509,6 @@ export default function CadastroPage() {
                                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
                                 placeholder="Bairro"
                               />
-                            </div>
-
-                            <div className="mb-4">
-                              <label htmlFor={`cidade-${endereco.id}`} className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
-                                Cidade
-                              </label>
-                              <IMaskInput
-                                mask={/^[A-Za-zÀ-ÿ\s]*$/}
-                                type="text"
-                                id={`cidade-${endereco.id}`}
-                                name="cidade"
-                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
-                                placeholder="Cidade"
-                              />
-                            </div>
-
-                            <div className="">
-                              <label htmlFor={`estado-${endereco.id}`} className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
-                                Estado
-                              </label>
-                              <Estados id={`estado-${endereco.id}`} name="estado" />
                             </div>
                           </div>
                         </div>
@@ -674,7 +669,7 @@ export default function CadastroPage() {
                         <div className="flex flex-wrap justify-between gap-4">
                           <div className="w-full sm:w-3/12">
                             <label htmlFor="estado" className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Estado</label>
-                            <Estados handleChange={(e) => setSelectedEstado(e)} />
+                            <Estados handleChange={(e) => selectedEstado(e)} />
                           </div>
                           <div className="w-full sm:w-8/12">
                             <label htmlFor="cidade" className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Cidade</label>
@@ -790,10 +785,10 @@ export default function CadastroPage() {
               {passwordsMatch && isValidusername
                 ? 'Enviar Cadastro'
                 : !passwordsMatch
-                ? 'As senhas não coincidem'
-                : !isValidusername
-                ? "O email precisa ser válido"
-                : "Algo deu errado."}
+                  ? 'As senhas não coincidem'
+                  : !isValidusername
+                    ? "O email precisa ser válido"
+                    : "Algo deu errado."}
             </button>
           </form>
 
