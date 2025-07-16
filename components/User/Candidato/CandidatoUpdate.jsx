@@ -180,7 +180,7 @@ export default function CandidatoUpdate() {
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
               Meus Endereços
             </h2>
-            <Link href={{pathname: "/profile/candidato/enderecos/criar"}} className="text-blue-400 dark:text-blue-500 hover:underline">
+            <Link href={{pathname: "candidato/enderecos/criar"}} className="text-blue-400 dark:text-blue-500 hover:underline">
               + Adicionar Endereço
             </Link>
           </div>
@@ -221,7 +221,7 @@ export default function CandidatoUpdate() {
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
               Minhas Formações
             </h2>
-            <Link href="/formacoes/nova" className="text-blue-400 dark:text-blue-500 hover:underline">
+            <Link href={{pathname: "candidato/formacao/criar"}} className="text-blue-400 dark:text-blue-500 hover:underline">
               + Adicionar Formação
             </Link>
           </div>
@@ -230,7 +230,7 @@ export default function CandidatoUpdate() {
             {user?.formacaoAcademica?.map((formacao) => (
               <div key={formacao.id} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg relative">
                 <Link
-                  href={`/formacoes/editar/${formacao.id}`}
+                  href={{pathname: `/profile/candidato/formacao/editar/[id]`, query: {id: formacao.id}}}
                   className="absolute top-3 right-3 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

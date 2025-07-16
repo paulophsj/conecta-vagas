@@ -51,7 +51,7 @@ export default function EnderecoForm({ mode = "create" }) {
           setSelectedEstado(userEndereco.enderecoEstado || null);
         }
       } catch (error) {
-        toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
+        toast.error(error.message, { position: "top-center", onClose: () => router.back(), pauseOnHover: false, autoClose: 1500 });
       }
     };
 

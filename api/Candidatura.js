@@ -2,7 +2,7 @@ import { Fetch } from "@/util/Fetch"
 
 export const enviarCandidatura = async (id) => {
     try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/candidatura/${id}`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/candidatura/${id}`, {
             method: "POST"
         })
         const data = await response.json()
@@ -18,7 +18,7 @@ export const enviarCandidatura = async (id) => {
 }
 export const checkAllCandidaturas = async () => {
     try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/candidatura`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/candidatura`, {
             method: "GET"
         })
         const data = await response.json()
@@ -34,7 +34,7 @@ export const checkAllCandidaturas = async () => {
 }
 export const checkAllCandidaturasByIdVaga = async (id) => {
     try {
-        const response = await Fetch(`http://10.221.211.67:8080/api/candidatura/recrutador/${id}`, {
+        const response = await Fetch(`http://192.168.1.40:8080/api/candidatura/recrutador/${id}`, {
             method: "GET"
         })
         const data = await response.json()
