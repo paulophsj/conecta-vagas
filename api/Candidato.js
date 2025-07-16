@@ -3,7 +3,7 @@ import { Auth } from "./Auth"
 
 export const createCandidato = async (candidato) => {
     try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/candidato`, {
+        const response = await Fetch(`http://localhost:8080/api/candidato`, {
             method: "POST",
             body: JSON.stringify(candidato)
         })
@@ -31,7 +31,7 @@ export const createCandidato = async (candidato) => {
 }
 export const updateCandidato = async (novoCandidato) => {
     try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/candidato`, {
+        const response = await Fetch(`http://localhost:8080/api/candidato`, {
             method: "PUT",
             body: JSON.stringify(novoCandidato)
         })
@@ -54,7 +54,7 @@ export const updateCandidato = async (novoCandidato) => {
 export const createEndereco = async (endereco) => {
     for (const umEndereco of endereco) {
         try {
-            const response = await Fetch(`http://192.168.1.40:8080/api/candidato/endereco`, {
+            const response = await Fetch(`http://localhost:8080/api/candidato/endereco`, {
                 method: "POST",
                 body: JSON.stringify(umEndereco)
             })
@@ -78,7 +78,7 @@ export const createEndereco = async (endereco) => {
 export const createFormacao = async (formacao) => {
     for (const umaFormacao of formacao) {
         try {
-            const response = await Fetch(`http://192.168.1.40:8080/api/candidato/formacao`, {
+            const response = await Fetch(`http://localhost:8080/api/candidato/formacao`, {
                 method: "POST",
                 body: JSON.stringify(umaFormacao)
             })
@@ -100,7 +100,7 @@ export const createFormacao = async (formacao) => {
 }
 export const findOneEndereco = async (id) => {
         try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/candidato/endereco/${id}`, {
+        const response = await Fetch(`http://localhost:8080/api/candidato/endereco/${id}`, {
             method: "GET",
         })
         const data = await response.json()
@@ -121,7 +121,7 @@ export const findOneEndereco = async (id) => {
 }
 export const updateEndereco = async (id, novoEndereco) => {
         try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/candidato/endereco/${id}`, {
+        const response = await Fetch(`http://localhost:8080/api/candidato/endereco/${id}`, {
             method: "PUT",
             body: JSON.stringify(novoEndereco)
         })
@@ -143,7 +143,7 @@ export const updateEndereco = async (id, novoEndereco) => {
 }
 export const findOneFormacao = async (id) => {
         try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/candidato/formacao/${id}`, {
+        const response = await Fetch(`http://localhost:8080/api/candidato/formacao/${id}`, {
             method: "GET",
         })
         const data = await response.json()
@@ -164,7 +164,7 @@ export const findOneFormacao = async (id) => {
 }
 export const updateFormacao = async (id, novaFormacao) => {
         try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/candidato/formacao/${id}`, {
+        const response = await Fetch(`http://localhost:8080/api/candidato/formacao/${id}`, {
             method: "PUT",
             body: JSON.stringify(novaFormacao)
         })

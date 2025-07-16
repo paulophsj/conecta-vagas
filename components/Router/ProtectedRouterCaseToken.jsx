@@ -12,6 +12,7 @@ export default function ProtectedRouterCaseToken({ children }) {
       router.replace('/login')
       return
     }
+    setLoading(false)
   }, [])
 
   if (loading) return <Spinner />

@@ -2,7 +2,7 @@ import { Fetch } from "@/util/Fetch"
 
 export const Auth = async (user) => {
     try {
-        const response = await fetch("http://192.168.1.40:8080/api/auth", {
+        const response = await fetch("http://localhost:8080/api/auth", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -27,7 +27,7 @@ export const Auth = async (user) => {
 export const checkUser = async () => {
     const type = localStorage.getItem("type")
     try {
-        const response = await Fetch(`http://192.168.1.40:8080/api/${type}`, {
+        const response = await Fetch(`http://localhost:8080/api/${type}`, {
             method: "GET"
         });
 

@@ -1,17 +1,33 @@
 import ListCard from "@/components/Cards/ListCard";
 import Head from "next/head";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function VagaIndexPage() {
     const [openModal, setOpenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
 
+    const searchParams = useSearchParams()
+
     const [qntLocalidades, setQtdLocalidades] = useState(1)
 
     const [filtros, setFiltros] = useState({
+        cargo: '',
         localidade: [],
         tipoEmprego: [],
     })
+
+    useEffect(() => {
+        const cargo = searchParams.get('cargo')
+        const localidade = decodeURIComponent(searchParams.get('localidade')).split(',')
+        console.log(localidade);
+        
+        if(cargo){
+            setFiltros({
+                cargo: cargo
+            })
+        }
+    }, [searchParams])
 
     useEffect(() => {
         if (openModal) {
@@ -26,10 +42,12 @@ export default function VagaIndexPage() {
         e.preventDefault()
         const formData = new FormData(e.target)
 
+        const cargo = formData.get("cargo")
         const allLocalidades = formData.getAll("localidade")
         const allTipoEmprego = formData.getAll("tipoEmprego")
 
         setFiltros({
+            cargo: cargo,
             localidade: allLocalidades,
             tipoEmprego: allTipoEmprego
         })
@@ -64,16 +82,20 @@ export default function VagaIndexPage() {
                                     <p className="font-bold text-lg dark:text-white">FILTROS</p>
                                 </header>
                                 <section className="space-y-4">
+                                    <div>
+                                        <p className="font-bold dark:text-gray-200">Nome do cargo</p>
+                                        <input type="text" defaultValue={filtros?.cargo} name="cargo" className="dark:bg-gray-700 dark:border-gray-600 rounded-sm outline-1 p-1 outline-blue-500" />
+                                    </div>
                                     <div className="flex flex-col gap-2">
                                         <p className="font-bold dark:text-gray-200" id="localidade">Localidade</p>
-                                        <button type="button" onClick={() => setQtdLocalidades(qntLocalidades + 1)} className="p-1 px-3 rounded-full bg-blue-500 hover:bg-blue-600 transition-colors w-fit m-0 flex items-center justify-center gap-3 font-bold text-sm">
+                                        <button type="button" onClick={() => setQtdLocalidades(qntLocalidades + 1)} className="p-1 px-3 rounded-full text-white bg-blue-500 hover:bg-blue-600 transition-colors w-fit m-0 flex items-center justify-center gap-3 font-bold text-sm">
                                             +
                                             <p>Adicionar localidade</p>
                                         </button>
                                         <div className="flex flex-col gap-2">
                                             {
                                                 Array.from({ length: qntLocalidades }).map((_, index) =>
-                                                    <label className="flex gap-2 items-center dark:text-gray-300">
+                                                    <label key={index} className="flex gap-2 items-center dark:text-gray-300">
                                                         <input
                                                             type="text"
                                                             name="localidade"

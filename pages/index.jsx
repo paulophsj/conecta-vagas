@@ -3,9 +3,12 @@ import ListComments from "@/components/Comments/ListComments";
 import { useLocalidades } from "@/hooks/useLocalidades";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 export default function Index() {
+  const router = useRouter()
+
   const { estados, municipios } = useLocalidades();
   const [isMounted, setIsMounted] = useState(false);
   const [valoresBuscados, setValoresBuscados] = useState(null);
@@ -42,6 +45,15 @@ export default function Index() {
     }
   };
 
+  const handleSubmit = async (e)=> {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(e.target))
+
+    const params = new URLSearchParams(data).toString()
+    
+    router.push(`/vagas?${params}`)
+  }
   return (
     <>
       <Head>
@@ -74,13 +86,14 @@ export default function Index() {
             </p>
           </div>
 
-          <form className="w-full max-w-4xl">
+          <form className="w-full max-w-4xl" onSubmit={handleSubmit}>
             <div className="flex flex-col sm:flex-row gap-4 w-full">
               <div className="flex-1 relative group">
                 <input
                   type="text"
                   className="w-full h-14 px-6 pr-12 rounded-lg border-2 border-blue-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-gray-600 dark:focus:border-blue-400 dark:bg-gray-800 dark:text-white transition-all duration-200 shadow-lg"
                   placeholder="O que você procura? (ex.: vendedor, TI...)"
+                  name="cargo"
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 group-focus-within:text-blue-600 dark:text-blue-300">
                   <svg
@@ -99,7 +112,8 @@ export default function Index() {
                 <input
                   type="text"
                   id="buscar-localidade"
-                  value={inputEstado}
+                  name="localidade"
+                  value={inputEstado || ""}
                   onChange={(e) => {
                     setInputEstado(e.target.value);
                     showOpcoes(e.target.value);
@@ -124,9 +138,9 @@ export default function Index() {
                 {valoresBuscados && valoresBuscados.length > 0 && (
                   <div className="absolute w-full mt-1 z-50 bg-white dark:bg-gray-800 shadow-xl rounded-lg border border-blue-100 dark:border-gray-700 overflow-hidden">
                     <ul className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-50 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800">
-                      {valoresBuscados.map((localidade) => (
+                      {valoresBuscados.map((localidade, index) => (
                         <li
-                          key={localidade.id}
+                          key={`localidade-${index}`}
                           onClick={() => {
                             setInputEstado(
                               localidade.nome +
@@ -167,7 +181,7 @@ export default function Index() {
                 )}
               </div>
 
-              <button className="h-14 px-8 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/50">
+              <button type="submit" className="h-14 px-8 bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
