@@ -4,18 +4,32 @@ import { toast } from "react-toastify";
 import { IMaskInput } from "react-imask";
 import { useUser } from "@/components/UserContext";
 import { createVaga } from "@/api/Vagas";
+import Estados from "@/components/Inputs/Estados";
+import Cidades from "@/components/Inputs/Cidades";
 
 export default function CriarVagaPage() {
   const router = useRouter();
   const { user } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [estados, setEstados] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+
+    const localizacao = data?.cidade && data?.estado ? `${data.cidade}, ${data.estado}` : "Sem cidade ou sem estado";
+
+    const { estado, cidade, ...others } = data
+
+    const newData = {
+      ...others,
+      localizacao
+    }
+
+    console.log(newData)
 
     // Convertendo tipos
     data.ativa = data.ativa === 'true';
@@ -23,12 +37,12 @@ export default function CriarVagaPage() {
     data.cargaHoraria = data.cargaHoraria ? parseInt(data.cargaHoraria) : null;
 
     try {
-      await createVaga(data);
-      toast.success("Vaga criada com sucesso!", { 
-        position: "top-center", 
-        pauseOnHover: false, 
-        onClose: () => router.push('/vagas'), 
-        autoClose: 1500 
+      await createVaga(newData);
+      toast.success("Vaga criada com sucesso!", {
+        position: "top-center",
+        pauseOnHover: false,
+        onClose: () => router.push('/vagas'),
+        autoClose: 1500
       });
     } catch (error) {
       toast.error(error.message, { position: "top-center", pauseOnHover: false, autoClose: 1500 });
@@ -119,14 +133,10 @@ export default function CriarVagaPage() {
                   >
                     Localização
                   </label>
-                  <input
-                    type="text"
-                    id="localizacao"
-                    name="localizacao"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
-                    placeholder="Localização do trabalho"
-                    maxLength={600}
-                  />
+                  <div className="flex gap-2">
+                    <Estados handleChange={(e) => setEstados(e)} />
+                    <Cidades byEstado={estados} />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -140,13 +150,12 @@ export default function CriarVagaPage() {
                     <IMaskInput
                       mask="num"
                       radix="."
-                      mapToRadix={[',']}
+                      mapToRadix={['.']}
                       unmask={true}
                       blocks={{
                         num: {
                           mask: Number,
                           scale: 2,
-                          padFractionalZeros: true,
                           normalizeZeros: true,
                           min: 0
                         }
@@ -155,7 +164,7 @@ export default function CriarVagaPage() {
                       id="salario"
                       name="salario"
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
-                      placeholder="0,00"
+                      placeholder="0.00"
                     />
                   </div>
 
@@ -215,9 +224,10 @@ export default function CriarVagaPage() {
                       htmlFor="formato"
                       className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
                     >
-                      Formato de Trabalho
+                      Formato de Trabalho *
                     </label>
                     <select
+                      required
                       id="formato"
                       name="formato"
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"

@@ -19,6 +19,7 @@ export default function Chat({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mensagens, setMensagens] = useState([]);
+  const [filterName, setFilterName] = useState('')
 
   const stompClients = useRef({});
   const inputRef = useRef(null)
@@ -96,7 +97,7 @@ export default function Chat({ children }) {
       setChats(response.map(chat => ({
         ...chat,
         lastMessage: chat.mensagens?.slice(-1)[0],
-        newMessage: true
+        newMessage: false
       })));
 
       setLoading(false);
@@ -246,11 +247,13 @@ export default function Chat({ children }) {
                             type="text"
                             placeholder="Buscar chats..."
                             className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                            onChange={(e) => setFilterName(e.target.value)}
                           />
                         </div>
                         {chats.map(chat => {
-                          const otherUser = getOtherUser(chat);
+                        const otherUser = getOtherUser(chat);
                           return (
+                            (otherUser.nomeEmpresa || otherUser.nome)?.toLowerCase().includes(filterName.toLowerCase()) &&
                             <div
                               key={chat.id}
                               onClick={() => selectChat(chat)}

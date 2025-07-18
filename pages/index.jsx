@@ -38,6 +38,7 @@ export default function Index() {
         .map((value) => ({
           nome: value?.nome,
           uf: value?.microrregiao?.mesorregiao?.UF?.nome,
+          sigla: value?.microrregiao?.mesorregiao?.UF?.sigla
         }));
       setValoresBuscados([...opcoesEstados, ...opcoesMunicipios]);
     } else {
@@ -144,7 +145,7 @@ export default function Index() {
                           onClick={() => {
                             setInputEstado(
                               localidade.nome +
-                              (localidade?.uf ? `, ${localidade.uf}` : "")
+                              (localidade?.uf ? `, ${localidade.sigla}` : "")
                             );
                             setValoresBuscados(null);
                           }}
@@ -172,7 +173,7 @@ export default function Index() {
                           </svg>
                           <span className="text-blue-800 dark:text-blue-100 font-medium">
                             {localidade.nome}
-                            {localidade?.uf && `, ${localidade.uf}`}
+                            {localidade?.uf && `, ${localidade?.sigla}`}
                           </span>
                         </li>
                       ))}

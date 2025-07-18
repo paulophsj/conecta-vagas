@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import { IMaskInput } from "react-imask";
 import { useUser } from "@/components/UserContext";
 import { deleteVaga, findOneVaga, updateVaga } from "@/api/Vagas";
+import Estados from "@/components/Inputs/Estados";
+import Cidades from "@/components/Inputs/Cidades";
+import Spinner from "@/components/Spinner";
 
 export default function EditarVagaPage() {
   const router = useRouter();
@@ -11,6 +14,7 @@ export default function EditarVagaPage() {
   const { user } = useUser();
   const [vaga, setVaga] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [estados, setEstados] = useState(null)
 
   useEffect(() => {
     if (id && user) {
@@ -34,13 +38,23 @@ export default function EditarVagaPage() {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
+    const localizacao = data?.cidade && data?.estado ? `${data.cidade}, ${data.estado}` : "Sem cidade ou sem estado";
+
+    const { estado, cidade, ...others } = data
+
+    const newData = {
+      ...others,
+      localizacao
+    }
+
+
     // Convertendo tipos
     data.ativa = data.ativa === 'true';
     data.salario = data.salario ? parseFloat(data.salario) : null;
     data.cargaHoraria = data.cargaHoraria ? parseInt(data.cargaHoraria) : null;
 
     try {
-      await updateVaga(id, data);
+      await updateVaga(id, newData);
       toast.success("Vaga atualizada com sucesso!", {
         position: "top-center",
         pauseOnHover: false,
@@ -52,7 +66,7 @@ export default function EditarVagaPage() {
     }
   };
 
-const excluirVaga = async () => {
+  const excluirVaga = async () => {
     try {
       const response = await deleteVaga(id);
       toast.success(response, {
@@ -63,17 +77,15 @@ const excluirVaga = async () => {
       });
     } catch (error) {
       toast.error(error.toString(), {
-        position: "top-center", 
-        pauseOnHover: false, 
-        autoClose: 1500 
+        position: "top-center",
+        pauseOnHover: false,
+        autoClose: 1500
       });
     }
-}
+  }
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
+      <Spinner />
     );
   }
 
@@ -163,15 +175,10 @@ const excluirVaga = async () => {
                   >
                     Localização
                   </label>
-                  <input
-                    type="text"
-                    id="localizacao"
-                    name="localizacao"
-                    defaultValue={vaga?.localizacao}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
-                    placeholder="Localização do trabalho"
-                    maxLength={600}
-                  />
+                  <div className="flex gap-2">
+                    <Estados handleChange={(e) => setEstados(e)} />
+                    <Cidades byEstado={estados} />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -185,13 +192,12 @@ const excluirVaga = async () => {
                     <IMaskInput
                       mask="num"
                       radix="."
-                      mapToRadix={[',']}
+                      mapToRadix={['.']}
                       unmask={true}
                       blocks={{
                         num: {
                           mask: Number,
                           scale: 2,
-                          padFractionalZeros: true,
                           normalizeZeros: true,
                           min: 0
                         }
@@ -201,7 +207,7 @@ const excluirVaga = async () => {
                       name="salario"
                       defaultValue={vaga?.salario}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
-                      placeholder="0,00"
+                      placeholder="0.00"
                     />
                   </div>
 
@@ -263,9 +269,10 @@ const excluirVaga = async () => {
                       htmlFor="formato"
                       className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
                     >
-                      Formato de Trabalho
+                      Formato de Trabalho *
                     </label>
                     <select
+                      required
                       id="formato"
                       name="formato"
                       defaultValue={vaga?.formato}
@@ -310,8 +317,8 @@ const excluirVaga = async () => {
             </button>
             <div className="flex gap-5">
               <button
-              type="button"
-              onClick={() => excluirVaga()}
+                type="button"
+                onClick={() => excluirVaga()}
                 className="cursor-pointer bg-red-400 dark:bg-red-600 hover:bg-red-500 dark:hover:bg-red-700 text-white py-2 px-6 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
               >
                 Excluir Vaga

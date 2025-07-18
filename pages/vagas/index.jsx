@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function VagaIndexPage() {
     const [openModal, setOpenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
+    const [showLocalidadeFiltro, setShowLocalidadeFiltro] = useState(false)
 
     const searchParams = useSearchParams()
 
@@ -19,12 +20,14 @@ export default function VagaIndexPage() {
 
     useEffect(() => {
         const cargo = searchParams.get('cargo')
-        const localidade = decodeURIComponent(searchParams.get('localidade')).split(',')
-        console.log(localidade);
-        
-        if(cargo){
+        const localidade = decodeURIComponent(searchParams.get('localidade'))
+
+        setShowLocalidadeFiltro(true)
+
+        if (cargo || localidade) {
             setFiltros({
-                cargo: cargo
+                cargo: cargo,
+                localidade: [localidade]
             })
         }
     }, [searchParams])
@@ -93,6 +96,28 @@ export default function VagaIndexPage() {
                                             <p>Adicionar localidade</p>
                                         </button>
                                         <div className="flex flex-col gap-2">
+                                            {
+                                                showLocalidadeFiltro && <label className="flex gap-2 items-center dark:text-gray-300">
+                                                    <input
+                                                        type="text"
+                                                        name="localidade"
+                                                        className="dark:bg-gray-700 dark:border-gray-600 rounded-sm outline-1 p-1 outline-blue-500"
+                                                        defaultValue={searchParams.get('localidade')}
+                                                        />
+                                                    <button
+                                                        tabIndex={1}
+                                                        type="button"
+                                                        onClick={() => setShowLocalidadeFiltro(false)}
+                                                        className="text-red-500 hover:text-red-700 dark:hover:text-red-400"
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                        </svg>
+                                                    </button>
+                                                </label>
+
+                                            }
                                             {
                                                 Array.from({ length: qntLocalidades }).map((_, index) =>
                                                     <label key={index} className="flex gap-2 items-center dark:text-gray-300">

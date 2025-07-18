@@ -9,12 +9,19 @@ export const findAllVagas = async () => {
         const data = await response.json()
 
         if (!response.ok) {
-            throw new Error(data.message || "Erro ao buscar vagas")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
 
         return data
     } catch (error) {
-        throw error.message
+        throw error
     }
 }
 export const findOneVaga = async (id) => {
@@ -26,7 +33,14 @@ export const findOneVaga = async (id) => {
         const data = await response.json()
 
         if (!response.ok) {
-            throw new Error(data?.message || "Erro ao buscar vagas")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
 
         return data
@@ -43,12 +57,19 @@ export const findAllVagasByRecrutador = async () => {
         const data = await response.json()
 
         if (!response.ok) {
-            throw new Error(data?.message || "Erro ao buscar vagas")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
 
         return data
     } catch (error) {
-        throw error.message
+        throw error
     }
 }
 export const updateVaga = async (id, novaVaga) => {
@@ -61,12 +82,19 @@ export const updateVaga = async (id, novaVaga) => {
         const data = await response.json()
 
         if (!response.ok) {
-            throw new Error(data?.message || "Erro ao buscar vagas")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
 
         return data
     } catch (error) {
-        throw error.message
+        throw error
     }
 }
 export const deleteVaga = async (id) => {
@@ -78,7 +106,14 @@ export const deleteVaga = async (id) => {
         const data = "Vaga excluida com sucesso!"
 
         if (!response.ok) {
-            throw new Error("Erro ao excluir vaga.")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
 
         return data
@@ -87,7 +122,7 @@ export const deleteVaga = async (id) => {
     }
 }
 export const createVaga = async (vaga) => {
-        try {
+    try {
         const response = await Fetch(`http://localhost:8080/api/vagas`, {
             method: "POST",
             body: JSON.stringify(vaga)
@@ -96,11 +131,18 @@ export const createVaga = async (vaga) => {
         const data = await response.json()
 
         if (!response.ok) {
-            throw new Error(data?.message || "Erro ao buscar vagas")
+            if (data?.message) {
+                throw new Error(data?.message)
+            }
+            else {
+                for (const err of data?.errors) {
+                    throw new Error(err.defaultMessage)
+                }
+            }
         }
 
         return data
     } catch (error) {
-        throw error.message
+        throw error
     }
 }

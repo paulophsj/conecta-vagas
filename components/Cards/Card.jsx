@@ -5,11 +5,6 @@ import { useEffect } from "react";
 export default function Card({ vagaEmprego, cardFilter = [] }) {
     const { pathname } = useRouter();
 
-    useEffect(() => {
-        console.log(cardFilter);
-        
-    }, [])
-
     const {
         id,
         titulo,
@@ -44,7 +39,7 @@ export default function Card({ vagaEmprego, cardFilter = [] }) {
     return (
         <>
             {
-                (!cardFilter.localidade || cardFilter.localidade.length === 0 || cardFilter.localidade.some(local => localizacao.includes(local))) &&
+                (!cardFilter.localidade || cardFilter.localidade.length === 0 || cardFilter.localidade.some(local => local.length >= 1 && localizacao.includes(local))) &&
                 (!cardFilter.cargo || titulo.includes(cardFilter.cargo)) &&
                 (!cardFilter.tipoEmprego || cardFilter.tipoEmprego.length === 0 || cardFilter.tipoEmprego.some(tipo => tipoContrato.includes(tipo))) && (
 
