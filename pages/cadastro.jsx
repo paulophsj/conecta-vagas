@@ -672,7 +672,7 @@ export default function CadastroPage() {
                         <div className="flex flex-wrap justify-between gap-4">
                           <div className="w-full sm:w-3/12">
                             <label htmlFor="estado" className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Estado</label>
-                            <Estados handleChange={(e) => selectedEstado(e)} />
+                            <Estados handleChange={(e) => setSelectedEstado(e)} />
                           </div>
                           <div className="w-full sm:w-8/12">
                             <label htmlFor="cidade" className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Cidade</label>
