@@ -144,8 +144,7 @@ export default function Index() {
                           key={`localidade-${index}`}
                           onClick={() => {
                             setInputEstado(
-                              localidade.nome +
-                              (localidade?.uf ? `, ${localidade.sigla}` : "")
+                              localidade.nome + ", " +localidade.sigla
                             );
                             setValoresBuscados(null);
                           }}

@@ -29,8 +29,6 @@ export default function CriarVagaPage() {
       localizacao
     }
 
-    console.log(newData)
-
     // Convertendo tipos
     data.ativa = data.ativa === 'true';
     data.salario = data.salario ? parseFloat(data.salario) : null;

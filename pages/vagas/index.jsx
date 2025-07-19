@@ -59,8 +59,16 @@ export default function VagaIndexPage() {
             localidade: allLocalidades,
             tipoEmprego: allTipoEmprego
         })
-
-        console.log(filtros)
+    }
+    const clearForm = () => {
+        const form = document.getElementById("form")
+        if(form) {form.reset()}
+        setFiltros({
+            cargo: "",
+            localidade: [],
+            tipoEmprego: []
+        })
+        
     }
     return (
         <>
@@ -83,7 +91,7 @@ export default function VagaIndexPage() {
             <section className="container p-5 mx-auto flex flex-col md:flex-row gap-5 items-start">
 
                 {!isLoading && (
-                    <form onSubmit={(e) => formSubmit(e)} className={`bg-white dark:bg-gray-800 w-11/12 md:w-1/4 p-4 shadow-md rounded-sm border border-gray-200 dark:border-gray-700 max-md:fixed h-fit top-1/2 left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:-translate-y-1/2 ${openModal ? "fixed inset-0 z-50 overflow-y-auto" : "hidden md:block"}`}>
+                    <form id="form" onSubmit={(e) => formSubmit(e)} className={`bg-white dark:bg-gray-800 w-11/12 md:w-1/4 p-4 shadow-md rounded-sm border border-gray-200 dark:border-gray-700 max-md:fixed h-fit top-1/2 left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:-translate-y-1/2 ${openModal ? "fixed inset-0 z-50 overflow-y-auto" : "hidden md:block"}`}>
                         <div className="flex flex-col h-full">
                             <div className="mb-2">
                                 <header className="mb-4">
@@ -240,6 +248,7 @@ export default function VagaIndexPage() {
                                 </button>
                                 <button
                                     type="button"
+                                    onClick={clearForm}
                                     className="text-xs w-full justify-center cursor-pointer p-2 items-center rounded-sm text-white flex gap-3 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="white" className="w-5 h-5 max-sm:w-3 max-sm:h-3 bi bi-eraser-fill" viewBox="0 0 16 16">

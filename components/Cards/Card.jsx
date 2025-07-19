@@ -5,8 +5,6 @@ import { useEffect } from "react";
 export default function Card({ vagaEmprego, cardFilter = [] }) {
     const { pathname } = useRouter();
 
-    console.log(cardFilter)
-
     const {
         id,
         titulo,

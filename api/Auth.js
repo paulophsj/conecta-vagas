@@ -21,6 +21,8 @@ export const Auth = async (user) => {
         return data?.message ?? "Logado com sucesso!"
 
     } catch (error) {
+        localStorage.removeItem("token")
+        localStorage.removeItem("type")
         throw error.message
     }
 }
