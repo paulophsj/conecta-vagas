@@ -1,5 +1,4 @@
 import ListCard from "@/components/Cards/ListCard";
-import ListComments from "@/components/Comments/ListComments";
 import { useLocalidades } from "@/hooks/useLocalidades";
 import Head from "next/head";
 import Link from "next/link";
@@ -330,19 +329,10 @@ export default function Index() {
       </section>
 
       {/* Testimonials */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-3xl font-bold text-center text-blue-400 dark:text-white mb-4">
-          O que dizem{" "}
-          <span className="text-blue-500 dark:text-blue-300">sobre nós</span>
-        </h2>
-        <p className="text-center text-blue-600 dark:text-blue-200 max-w-2xl mx-auto mb-12">
-          Veja o que nossos usuários estão falando sobre suas experiências
-        </p>
-        <ListComments quantidade={4} />
-      </section>
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16"></section>
 
       {/* CTA Section */}
-      <section className="bg-blue-500 dark:bg-blue-700 py-16 w-full mb-15">
+      <section className="bg-blue-400 dark:bg-blue-600 py-16 w-full mb-15">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-6">
             Pronto para encontrar seu emprego dos sonhos?
