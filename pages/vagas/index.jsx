@@ -104,7 +104,7 @@ export default function VagaIndexPage() {
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <p className="font-bold dark:text-gray-200" id="localidade">Localidade</p>
-                                        <button type="button" onClick={() => setQtdLocalidades(qntLocalidades + 1)} className="p-1 px-3 rounded-full text-white bg-blue-500 hover:bg-blue-600 transition-colors w-fit m-0 flex items-center justify-center gap-3 font-bold text-sm">
+                                        <button type="button" onClick={() => qntLocalidades <= 3 ? setQtdLocalidades(qntLocalidades + 1) : ""} className="p-1 px-3 rounded-full text-white bg-blue-500 hover:bg-blue-600 transition-colors w-fit m-0 flex items-center justify-center gap-3 font-bold text-sm">
                                             +
                                             <p>Adicionar localidade</p>
                                         </button>

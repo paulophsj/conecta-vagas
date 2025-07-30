@@ -40,7 +40,7 @@ export default function Card({ vagaEmprego, cardFilter = [] }) {
         <>
             {
                 (!cardFilter.localidade || cardFilter.localidade.length === 0 || cardFilter.localidade.some(local => localizacao.includes(local))) &&
-                (!cardFilter.cargo || titulo.includes(cardFilter.cargo)) &&
+                (!cardFilter.cargo || titulo.toLowerCase().includes(cardFilter.cargo.toLowerCase())) &&
                 (!cardFilter.tipoEmprego || cardFilter.tipoEmprego.length === 0 || cardFilter.tipoEmprego.some(tipo => tipoContrato.includes(tipo))) && (
 
                     pathname === "/vagas" ? (
